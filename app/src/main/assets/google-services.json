@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "336416749013",
+    "project_id": "projetinho-ac630",
+    "storage_bucket": "projetinho-ac630.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336416749013:android:bd6942c2d11a70ac52f95c",
+        "android_client_info": {
+          "package_name": "br.edu.ifrn.sc.info"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4cY45Dj-BxMaEpsIyyA80NUJG3WtHhDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
