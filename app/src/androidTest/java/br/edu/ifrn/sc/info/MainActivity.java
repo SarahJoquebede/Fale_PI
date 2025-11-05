@@ -1,130 +1,159 @@
 package br.edu.ifrn.sc.info;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.os.Environment;
+import android.view.View;
+import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_CODE = 100;
-    private MediaRecorder recorder;
-    private File audioFile;
+    private Button btnStart;
+    private Button btnStop;
+    private Button btnList;
     private TextView tvStatus;
-    private Button btnStart, btnStop;
     private ProgressBar progressUpload;
+
+    private MediaRecorder recorder;
+    private String filePath;
+    private FirebaseStorage storage;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
+
+    private static final int PERM_CODE = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvStatus = findViewById(R.id.tvStatus);
         btnStart = findViewById(R.id.btnStart);
         btnStop = findViewById(R.id.btnStop);
+        btnList = findViewById(R.id.btnList);
+        tvStatus = findViewById(R.id.tvStatus);
         progressUpload = findViewById(R.id.progressUpload);
 
+        storage = FirebaseStorage.getInstance();
+        db = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (!hasPermissions()) {
-            requestPermissions();
+        /*
+        if (user == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }*/
+
+        checkPermissions();
+
+        btnStart.setOnClickListener(v -> gravar());
+        btnStop.setOnClickListener(v -> pararDeGravar());
+        btnList.setOnClickListener(v -> {
+            startActivity(new Intent(this, ListAudioActivity.class));
+        });
+    }
+    private void checkPermissions() {
+        String[] permissions = {
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        for (String perm : permissions) {
+            if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, permissions, PERM_CODE);
+                break;
+            }
         }
-
-        btnStart.setOnClickListener(v -> startRecording());
-        btnStop.setOnClickListener(v -> stopRecording());
     }
 
-    private boolean hasPermissions() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                PERMISSION_CODE);
-    }
-
-    private void startRecording() {
+    private void gravar() {
         try {
-            audioFile = new File(getExternalFilesDir(null), "gravacao_" + System.currentTimeMillis() + ".mp4");
+            File dir = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            filePath = dir.getAbsolutePath() + "/audio_" + timeStamp + ".3gp";
 
             recorder = new MediaRecorder();
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-            recorder.setOutputFile(audioFile.getAbsolutePath());
-
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFile(filePath);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             recorder.prepare();
             recorder.start();
 
             tvStatus.setText("Gravando...");
             btnStart.setEnabled(false);
             btnStop.setEnabled(true);
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Erro ao iniciar gravação", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro ao gravar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void stopRecording() {
+
+    private void pararDeGravar() {
         try {
             recorder.stop();
             recorder.release();
             recorder = null;
-
-            tvStatus.setText("Gravação concluída!");
+            tvStatus.setText("Gravação finalizada. Enviando...");
             btnStart.setEnabled(true);
             btnStop.setEnabled(false);
-
-            uploadToFirebase(audioFile);
-
+            uploadToFirebase(); //COLOCAR O NOME DO ARQUIVO PARA SALVAR
         } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Erro ao parar gravação", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro ao parar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void uploadToFirebase(File file) {
-        progressUpload.setVisibility(ProgressBar.VISIBLE);
-        tvStatus.setText("Enviando áudio...");
+    private void uploadToFirebase() {
+        progressUpload.setVisibility(View.VISIBLE);
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        StorageReference audioRef = storageRef.child("audios/" + file.getName());
+        Uri fileUri = Uri.fromFile(new File(filePath));
+        String fileName = fileUri.getLastPathSegment();
+        StorageReference ref = storage.getReference().child("audios/" + fileName);
 
-        Uri fileUri = Uri.fromFile(file);
-        UploadTask uploadTask = audioRef.putFile(fileUri);
+        ref.putFile(fileUri)
+                .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                    saveMetadata(uri.toString());
+                    progressUpload.setVisibility(View.GONE);
+                    tvStatus.setText("Áudio enviado!");
+                }))
+                .addOnFailureListener(e -> {
+                    progressUpload.setVisibility(View.GONE);
+                    tvStatus.setText("Erro no upload: " + e.getMessage());
+                });
+    }
 
-        uploadTask.addOnProgressListener(snapshot -> {
-            double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-            tvStatus.setText(String.format("Enviando: %.0f%%", progress));
-        }).addOnSuccessListener(taskSnapshot -> {
-            progressUpload.setVisibility(ProgressBar.GONE);
-            tvStatus.setText("Upload concluído!");
-            Toast.makeText(this, "Áudio enviado com sucesso!", Toast.LENGTH_SHORT).show();
-            file.delete(); // opcional: apagar após envio
-        }).addOnFailureListener(e -> {
-            progressUpload.setVisibility(ProgressBar.GONE);
-            tvStatus.setText("Falha no upload");
-            Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        });
+    private void saveMetadata(String downloadUrl) {
+        Map<String, Object> audio = new HashMap<>();
+        audio.put("autorId", user.getUid());
+        audio.put("autorEmail", user.getEmail());
+        audio.put("arquivoUrl", downloadUrl);
+        audio.put("dataEnvio", new Date());
+
+        db.collection("audios").add(audio)
+                .addOnSuccessListener(doc -> Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Erro ao salvar metadados", Toast.LENGTH_SHORT).show());
     }
 }
 
