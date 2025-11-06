@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"
+        tools:ignore="WrongManifestParent" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage,WrongManifestParent" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage,WrongManifestParent" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,20 +23,13 @@
         tools:targetApi="25"
         >
 
-        <uses-permission android:name="android.permission.RECORD_AUDIO"
-            tools:ignore="WrongManifestParent" />
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-            tools:ignore="WrongManifestParent" />
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-            tools:ignore="WrongManifestParent" />
-
         <activity
             android:name="br.edu.ifrn.sc.info.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.Fale" />
         <activity
-            android:name="UI.LoginActivity"
+            android:name="br.edu.ifrn.sc.info.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.Fale" />
