@@ -79,7 +79,7 @@ public class ListAudioActivity extends AppCompatActivity{
 
         @NonNull
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = View.inflate(parent.getContext(), R.layout.item_audio, null);
+            View v = View.inflate(parent.getContext(), R.layout.audio_item, null);
             return new ViewHolder(v);
         }
 
