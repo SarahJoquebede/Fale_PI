@@ -5,7 +5,10 @@ public class AudioItem {
     private String arquivoUrl;
     private String autorEmail;
 
-    public AudioItem() {}
+    public AudioItem() {
+
+
+    }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
