@@ -6,7 +6,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.edu.ifrn.sc.info.MainActivity">
+    tools:context="androidTest.java.br.edu.ifrn.sc.info.MainActivity">
 
     <TextView
         android:id="@+id/tvStatus"
@@ -25,14 +25,6 @@
     <Button
         android:id="@+id/btnStop"
         android:text="⏹️ Parar"
-        android:layout_marginTop="16dp"
-        android:enabled="false"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnList"
-        android:text="Listar"
         android:layout_marginTop="16dp"
         android:enabled="false"
         android:layout_width="200dp"
