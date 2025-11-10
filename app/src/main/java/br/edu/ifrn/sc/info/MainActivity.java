@@ -130,10 +130,15 @@ public class MainActivity extends AppCompatActivity {
 
         Uri fileUri = Uri.fromFile(new File(filePath));
         String fileName = fileUri.getLastPathSegment();
+
+
+
         StorageReference ref = storage.getReference().child("audios/" + fileName);
 
         ref.putFile(fileUri)
                 .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+
+                    Toast.makeText(this, "Oiiiiiiiii", Toast.LENGTH_LONG).show();
                     saveMetadata(uri.toString());
                     progressUpload.setVisibility(View.GONE);
                     tvStatus.setText("Áudio enviado!");

@@ -30,9 +30,30 @@
             android:theme="@style/Theme.Fale" />
         <activity
             android:name="br.edu.ifrn.sc.info.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Fale" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="br.edu.ifrn.sc.info.ListAudioActivity"
+            android:exported="false"
+            android:label="@string/title_activity_list_audio"
             android:theme="@style/Theme.Fale" />
+
+        <activity
+            android:name="br.edu.ifrn.sc.info.ReviewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_review"
+            android:theme="@style/Theme.Fale" />
+
+
     </application>
 
 </manifest>
