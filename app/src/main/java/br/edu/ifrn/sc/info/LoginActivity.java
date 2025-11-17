@@ -68,6 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 }

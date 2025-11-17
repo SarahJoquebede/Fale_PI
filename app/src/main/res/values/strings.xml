@@ -2,4 +2,6 @@
     <string name="app_name">Fale+</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_list_audio">ListAudioActivity</string>
+    <string name="title_activity_review">ReviewActivity</string>
 </resources>
