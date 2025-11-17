@@ -7,6 +7,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaRecorder recorder;
     private String filePath;
-    private FirebaseStorage storage;
+    private StorageReference storage;
+
     private FirebaseFirestore db;
     private FirebaseUser user;
 
@@ -54,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         progressUpload = findViewById(R.id.progressUpload);
 
-        storage = FirebaseStorage.getInstance();
+        // Inicializa o Storage apontando diretamente para o bucket do seu projeto Firebase
+        storage = FirebaseStorage
+                .getInstance("gs://seu-projeto.appspot.com") // <-- substitua pelo nome do SEU bucket
+                .getReference();
+
         db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -91,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             File dir = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            assert dir != null;
             filePath = dir.getAbsolutePath() + "/audio_" + timeStamp + ".3gp";
 
             recorder = new MediaRecorder();
@@ -119,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             tvStatus.setText("Gravação finalizada. Enviando...");
             btnStart.setEnabled(true);
             btnStop.setEnabled(false);
+
             uploadToFirebase(); //COLOCAR O NOME DO ARQUIVO PARA SALVAR
         } catch (Exception e) {
             Toast.makeText(this, "Erro ao parar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -127,25 +135,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadToFirebase() {
         progressUpload.setVisibility(View.VISIBLE);
+        File audioFile = new File(filePath);
 
-        Uri fileUri = Uri.fromFile(new File(filePath));
+        if (!audioFile.exists()) {
+            tvStatus.setText("Erro: Arquivo local não encontrado!");
+            progressUpload.setVisibility(View.GONE);
+            return;
+        }
+
+        Uri fileUri = Uri.fromFile(audioFile);
         String fileName = fileUri.getLastPathSegment();
 
-
-
-        StorageReference ref = storage.getReference().child("audios/" + fileName);
+        StorageReference ref = storage.child("audios/" + fileName);
 
         ref.putFile(fileUri)
-                .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                    Toast.makeText(this, "Oiiiiiiiii", Toast.LENGTH_LONG).show();
-                    saveMetadata(uri.toString());
-                    progressUpload.setVisibility(View.GONE);
-                    tvStatus.setText("Áudio enviado!");
-                }))
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Agora usamos o próprio snapshot pra pegar o link
+                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                        saveMetadata(uri.toString());
+                        progressUpload.setVisibility(View.GONE);
+                        tvStatus.setText("Áudio enviado!");
+                    });
+                })
                 .addOnFailureListener(e -> {
                     progressUpload.setVisibility(View.GONE);
                     tvStatus.setText("Erro no upload: " + e.getMessage());
+                    e.printStackTrace();
                 });
     }
 

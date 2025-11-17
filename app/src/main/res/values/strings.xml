@@ -4,4 +4,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_list_audio">ListAudioActivity</string>
     <string name="title_activity_review">ReviewActivity</string>
+    <string name="voltar">Voltar</string>
 </resources>
