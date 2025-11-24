@@ -30,9 +30,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:contentDescription="Início"
-            android:src="@drawable/home_menu"
             android:paddingTop="8dp"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp"
+            android:src="@drawable/home_menu" />
 
         <View
             android:id="@+id/indicator_home"
