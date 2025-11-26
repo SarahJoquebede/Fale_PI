@@ -174,5 +174,45 @@
         android:layout_height="wrap_content"
         app:barrierDirection="left" />
 
+    <TextView
+        android:id="@+id/tv_campo_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NomeExemplo"
+        android:textSize="10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:layout_editor_absoluteX="107dp"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <TextView
+        android:id="@+id/tv_campo_cpf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CPFexemplo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="10"
+        tools:layout_editor_absoluteX="107dp"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <TextView
+        android:id="@+id/tv_campo_desvio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="desvioExemplo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="10"
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <TextView
+        android:id="@+id/tv_campo_idade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IdadeExemplo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="10"
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="169dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
