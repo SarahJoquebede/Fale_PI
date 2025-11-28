@@ -43,6 +43,7 @@
                 android:layout_marginStart="52dp"
                 android:layout_marginTop="16dp"
                 android:text="DESVIO_PACIENTE"
+                android:fontFamily="@font/lilita_oone"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#FFFFFF"
                 android:textSize="28dp"
@@ -88,10 +89,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/imageButton"
                 app:layout_constraintEnd_toEndOf="@+id/imageButton"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.535"
                 app:layout_constraintStart_toStartOf="@+id/imageButton"
                 app:layout_constraintTop_toTopOf="@+id/imageButton"
-                app:layout_constraintVertical_bias="0.226"
+                app:layout_constraintVertical_bias="0.489"
                 app:srcCompat="@drawable/animal_icon" />
 
             <ImageView
@@ -129,8 +130,8 @@
                 android:layout_height="107dp"
                 android:scaleX="-1.0"
                 app:srcCompat="@drawable/patinhas_sem_cor"
-                tools:layout_editor_absoluteX="129dp"
-                tools:layout_editor_absoluteY="121dp" />
+                tools:layout_editor_absoluteX="154dp"
+                tools:layout_editor_absoluteY="155dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
