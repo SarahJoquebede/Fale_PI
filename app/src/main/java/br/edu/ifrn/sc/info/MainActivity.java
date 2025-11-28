@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Inicializa o Storage apontando diretamente para o bucket do seu projeto Firebase
         storage = FirebaseStorage
-                .getInstance("gs://seu-projeto.appspot.com") // <-- substitua pelo nome do SEU bucket
+                .getInstance("gs://projetinho-ac630.firebasestorage.app") // <-- substitua pelo nome do SEU bucket
                 .getReference();
 
         db = FirebaseFirestore.getInstance();
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(v -> gravar());
         btnStop.setOnClickListener(v -> pararDeGravar());
         btnList.setOnClickListener(v -> {
-            startActivity(new Intent(this, ListAudioActivity.class));
+            startActivity(new Intent(MainActivity.this, ListAudioActivity.class));
         });
     }
     private void checkPermissions() {
@@ -111,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
             tvStatus.setText("Gravando...");
             btnStart.setEnabled(false);
             btnStop.setEnabled(true);
+            btnList.setEnabled(true);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("ERRO", e.getMessage());
             Toast.makeText(this, "Erro ao gravar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             tvStatus.setText("Gravação finalizada. Enviando...");
             btnStart.setEnabled(true);
             btnStop.setEnabled(false);
+            btnList.setEnabled(true);
 
             uploadToFirebase(); //COLOCAR O NOME DO ARQUIVO PARA SALVAR
         } catch (Exception e) {
