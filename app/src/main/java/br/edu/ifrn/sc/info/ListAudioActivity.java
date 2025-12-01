@@ -35,7 +35,7 @@ public class ListAudioActivity extends AppCompatActivity{
         db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        loadAudios();
+     //   loadAudios();
 
         adapter = new AudioAdapter(audioList, item -> {
             Intent i = new Intent(this, ReviewActivity.class);
@@ -45,7 +45,7 @@ public class ListAudioActivity extends AppCompatActivity{
         });
         rvAudios.setAdapter(adapter);
 
-      //  loadAudios();
+        loadAudios();
     }
 
     private void loadAudios() {
@@ -61,7 +61,7 @@ public class ListAudioActivity extends AppCompatActivity{
                         a.setAutorEmail(doc.getString("autorEmail"));
                         audioList.add(a);
                     }
-                 //   adapter.notifyDataSetChanged();
+                   adapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }

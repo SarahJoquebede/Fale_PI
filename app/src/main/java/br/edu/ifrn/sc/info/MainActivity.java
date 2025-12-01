@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
         audio.put("dataEnvio", new Date());
 
         db.collection("audios").add(audio)
-                .addOnSuccessListener(doc -> Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro ao salvar metadados", Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(doc -> Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Erro ao salvar metadados", Toast.LENGTH_LONG).show());
     }
 }
 
