@@ -1,6 +1,8 @@
 package br.edu.ifrn.sc.info;
 
-public class AudioItem {
+import java.io.Serializable;
+
+public class AudioItem implements Serializable {
     private String id;
     private String arquivoUrl;
     private String autorEmail;
