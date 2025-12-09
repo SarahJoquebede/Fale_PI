@@ -2,26 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:visibility="visible"
-    tools:visibility="visible">
-
+    android:layout_width="411dp"
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/include"
-        layout="@layout/activity_teste2" />
-    <include
-        layout="@layout/botao_menu_paciente"
-        />
+        layout="@layout/activity_cabecalho_model"/>
 
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="91dp"
         android:layout_height="84dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="148dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +34,7 @@
         android:id="@+id/tvIdade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="48dp"
         android:layout_marginBottom="2dp"
         android:text="Idade:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -65,8 +57,8 @@
         android:id="@+id/tvDesvio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
         android:text="Desvio(s):"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toEndOf="@+id/tvCPF"
@@ -76,8 +68,8 @@
         android:id="@+id/tvTelResponsavel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Telefone(Responsável):"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintStart_toEndOf="@+id/tvFiliacao"
@@ -178,17 +170,19 @@
         android:id="@+id/tv_campo_cpf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="91dp"
         android:text="CPFexemplo"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="10dp"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/tvCPF" />
 
     <TextView
         android:id="@+id/tv_campo_desvio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="1dp"
         android:text="desvioExemplo"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -208,5 +202,21 @@
         app:layout_constraintStart_toEndOf="@+id/tv_campo_nome"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="4dp"
+
+        android:background="#505FA6"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:labelVisibilityMode="unlabeled"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
