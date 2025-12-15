@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+        android:theme="@style/Theme.Fale"
         tools:targetApi="25"
         >
 
@@ -27,12 +27,12 @@
             android:name="br.edu.ifrn.sc.info.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+            android:theme="@style/Theme.Fale" />
         <activity
             android:name="br.edu.ifrn.sc.info.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" >
+            android:theme="@style/Theme.Fale" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,13 +45,13 @@
             android:name="br.edu.ifrn.sc.info.ListAudioActivity"
             android:exported="false"
             android:label="@string/title_activity_list_audio"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+            android:theme="@style/Theme.Fale" />
 
         <activity
             android:name="br.edu.ifrn.sc.info.ReviewActivity"
             android:exported="false"
             android:label="@string/title_activity_review"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+            android:theme="@style/Theme.Fale" />
 
 
     </application>

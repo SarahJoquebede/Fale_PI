@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Olá, {nome}"
+            android:fontFamily="@font/lilita_oone"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
