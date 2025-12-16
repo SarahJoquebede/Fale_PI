@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Fale"
         tools:targetApi="25"
         >
+        <activity android:name=".BlocosActivity" />
+        <activity android:name=".UploadArquivos" />
+
 
         <activity
             android:name="br.edu.ifrn.sc.info.MainActivity"

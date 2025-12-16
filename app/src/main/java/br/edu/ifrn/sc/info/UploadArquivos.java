@@ -43,11 +43,14 @@ public class UploadArquivos extends AppCompatActivity {
     private EditText mSilabicaEditText;
     private Button mAddItemButton;
     private TextView mImageStatus, mAudioStatus;
+    private String blocoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_arquivos);
+        blocoSelecionado = getIntent().getStringExtra("bloco");
+
 
         // Recebe o ID do tema da tela anterior
         mThemeId = getIntent().getStringExtra("THEME_ID");
@@ -66,6 +69,22 @@ public class UploadArquivos extends AppCompatActivity {
         findViewById(R.id.btn_select_image).setOnClickListener(v -> selectFile(PICK_IMAGE_REQUEST, "image/*"));
         findViewById(R.id.btn_record_audio).setOnClickListener(v -> checkPermissionAndSelectAudio());
         mAddItemButton.setOnClickListener(v -> validateAndUploadItem());
+        mAddItemButton.setOnClickListener(v -> {
+            salvarAtividade();
+        });
+    }
+    private void salvarAtividade() {
+
+        String palavra = mPalavraEditText.getText().toString().trim();
+        String silabas = mSilabicaEditText.getText().toString().trim();
+
+        if (palavra.isEmpty() || silabas.isEmpty()) {
+            Toast.makeText(this,
+                    "Preencha todos os campos",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        finish();
     }
 
     private void selectFile(int requestCode, String type) {
@@ -146,6 +165,7 @@ public class UploadArquivos extends AppCompatActivity {
                 });
     }
 
+
     // Método para salvar o item (metadados) no array 'items' do documento do Tema no Firestore
     private void saveItemToFirestore(String palavra, String silabica, String imageUrl, String audioUrl) {
         DocumentReference themeRef = FirebaseFirestore.getInstance().collection("themes").document(mThemeId);
@@ -173,5 +193,6 @@ public class UploadArquivos extends AppCompatActivity {
                     Toast.makeText(UploadArquivos.this, "Falha ao salvar item no Firestore.", Toast.LENGTH_SHORT).show();
                     mAddItemButton.setEnabled(true);
                 });
+
     }
 }
