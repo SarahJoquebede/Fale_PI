@@ -8,7 +8,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="br.edu.ifrn.sc.info.MainActivity">
     <include
         android:id="@+id/include"
         layout="@layout/activity_teste2" />
@@ -20,7 +20,8 @@
         android:text="Toque em Gravar"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="415dp" />
+        tools:layout_editor_absoluteY="415dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnStart"
@@ -30,7 +31,8 @@
         android:visibility="invisible"
         app:icon="@drawable/btnouvir"
         tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="458dp" />
+        tools:layout_editor_absoluteY="458dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnStop"
@@ -39,7 +41,8 @@
         android:enabled="false"
         android:text="⏹️ Parar"
         tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="524dp" />
+        tools:layout_editor_absoluteY="524dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnList"
@@ -48,14 +51,16 @@
         android:enabled="true"
         android:text="Listar"
         tools:layout_editor_absoluteX="117dp"
-        tools:layout_editor_absoluteY="567dp" />
+        tools:layout_editor_absoluteY="567dp"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progressUpload"
         android:layout_marginTop="32dp"
         android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imgAtividade"
@@ -74,7 +79,8 @@
         android:text="🔊 Ouvir áudio"
         android:visibility="invisible"
         tools:layout_editor_absoluteX="214dp"
-        tools:layout_editor_absoluteY="458dp" />
+        tools:layout_editor_absoluteY="458dp"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -100,7 +106,8 @@
         android:src="@drawable/microfone"
         app:layout_constraintEnd_toEndOf="@+id/btnStart"
         app:layout_constraintStart_toStartOf="@+id/btnStart"
-        tools:layout_editor_absoluteY="456dp" />
+        tools:layout_editor_absoluteY="456dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -109,7 +116,8 @@
         android:src="@drawable/btnouvir"
         app:layout_constraintEnd_toEndOf="@+id/btnPlayAtividade"
         app:layout_constraintStart_toStartOf="@+id/btnPlayAtividade"
-        tools:layout_editor_absoluteY="456dp" />
+        tools:layout_editor_absoluteY="456dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
