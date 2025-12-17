@@ -3,6 +3,7 @@ package br.edu.ifrn.sc.info;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,6 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private Button btnStart;
     private Button btnStop;
@@ -48,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
     private CardView cvPendentesDetalhes;
     private Button botaoPontos;
     private RecyclerView rvPendentes;
+    private ImageView imgAtividade;
+    private Button btnPlayAtividade;
+
+    private String imageUrl;
+    private String audioUrl;
+
+    private MediaPlayer mediaPlayer;
+
     private static final int PERM_CODE = 1001;
 
     @Override
@@ -60,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         btnList = findViewById(R.id.btnList);
         tvStatus = findViewById(R.id.tvStatus);
         progressUpload = findViewById(R.id.progressUpload);
+        imgAtividade = findViewById(R.id.imgAtividade);
+        btnPlayAtividade = findViewById(R.id.btnPlayAtividade);
+
 
         // Inicializa o Storage apontando diretamente para o bucket do seu projeto Firebase
         storage = FirebaseStorage
@@ -83,7 +98,64 @@ public class MainActivity extends AppCompatActivity {
         btnList.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ListAudioActivity.class));
         });
+        db.collection("blocos")
+                .document("plosivizacao")
+                .collection("categorias")
+                .document("animais")
+                .collection("atividades")
+                .limit(1)
+                .get()
+                .addOnSuccessListener(query -> {
+                    if (!query.isEmpty()) {
+                        DocumentSnapshot doc = query.getDocuments().get(0);
+
+                        imageUrl = doc.getString("imageUrl");
+                        audioUrl = doc.getString("audioUrl");
+
+                        mostrarImagemAtividade();
+                        prepararAudioAtividade();
+                    }
+                });
+
     }
+    private void mostrarImagemAtividade() {
+
+        if (imageUrl == null) return;
+
+        imgAtividade.setVisibility(View.VISIBLE);
+
+        Glide.with(this)
+                .load(imageUrl)
+                .into(imgAtividade);
+    }
+    private void prepararAudioAtividade() {
+
+        if (audioUrl == null) return;
+
+        btnPlayAtividade.setVisibility(View.VISIBLE);
+
+        btnPlayAtividade.setOnClickListener(v -> {
+            try {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setDataSource(audioUrl);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+
+            } catch (Exception e) {
+                Toast.makeText(this,
+                        "Erro ao reproduzir áudio da atividade",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    } // Parte do código relacionada pela busca no Firestore da atividade criada na tela de upload
+    // (imagem e áudio salvos anteriormente pelo fono)
+    // Carrega a atividade (imagem e áudio) que foi salva no Firestore
+
+
     private void checkPermissions() {
         String[] permissions = {
                 Manifest.permission.RECORD_AUDIO,
@@ -183,5 +255,6 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(doc -> Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_LONG).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Erro ao salvar metadados", Toast.LENGTH_LONG).show());
     }
+
 }
 
