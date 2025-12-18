@@ -117,7 +117,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="531dp" />
+            tools:layout_editor_absoluteY="531dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/imageView9"

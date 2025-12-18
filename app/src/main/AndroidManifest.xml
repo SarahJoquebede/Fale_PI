@@ -24,6 +24,9 @@
         >
         <activity android:name=".BlocosActivity" />
         <activity android:name=".UploadArquivos" />
+        <activity android:name=".ListaPacientesActivity" />
+        <activity android:name=".CadastrarPacienteActivity" />
+
 
 
         <activity

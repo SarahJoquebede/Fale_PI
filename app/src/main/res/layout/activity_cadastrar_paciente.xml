@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+       >
+
+        <include
+            android:id="@+id/include2"
+            layout="@layout/activity_cabecalho_model" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lilita_oone"
+            android:text="Cadastrar paciente"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="49dp"
+            tools:layout_editor_absoluteY="131dp" />
+
+        <EditText
+            android:id="@+id/edtNome"
+            android:layout_width="372dp"
+            android:layout_height="43dp"
+            android:hint="Nome"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="216dp" />
+
+        <EditText
+            android:id="@+id/edtDataNascimento"
+            android:layout_width="382dp"
+            android:layout_height="40dp"
+            android:hint="Data de nascimento"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="275dp" />
+
+        <EditText
+            android:id="@+id/edtTipoSessao"
+            android:layout_width="370dp"
+            android:layout_height="47dp"
+            android:hint="Tipo de sessão"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="440dp" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="380dp"
+            android:layout_height="42dp"
+            android:hint="Email (login)"
+            android:inputType="textEmailAddress"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="19dp"
+            tools:layout_editor_absoluteY="327dp" />
+
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="383dp"
+            android:layout_height="43dp"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="380dp" />
+
+
+        <Button
+            android:id="@+id/btnCadastrar"
+            android:layout_width="136dp"
+            android:layout_height="45dp"
+            android:text="Cadastrar"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="263dp"
+            tools:layout_editor_absoluteY="576dp" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="#313133"
+            app:srcCompat="@drawable/lista_img"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="130dp" />
+
+        <ImageButton
+            android:id="@+id/ibtnExcluir"
+            android:layout_width="46dp"
+            android:layout_height="48dp"
+            android:tint="#003F51B5"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            tools:layout_editor_absoluteY="568dp" />
+
+        <ImageButton
+            android:id="@+id/ibtnAtualizar"
+            android:layout_width="53dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="568dp"
+            android:layout_marginEnd="124dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/btnCadastrar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

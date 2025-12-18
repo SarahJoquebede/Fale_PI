@@ -19,6 +19,7 @@
         android:layout_marginTop="136dp"
         android:fontFamily="@font/lilita_oone"
         android:text="Blocos de atividades"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +65,7 @@
         <TextView
             android:text="Animais"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"  />
 
         <Button
             android:id="@+id/btnEnviarAnimais"
