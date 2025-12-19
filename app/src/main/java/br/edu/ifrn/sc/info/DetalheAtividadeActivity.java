@@ -20,7 +20,7 @@ public class DetalheAtividadeActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private String idPaciente, idAtividade;
     private ImageButton btnPlayAudio;
-    private String audioUrl;
+    private String arquivoUrl;
     private MediaPlayer mediaPlayer;
 
     private FirebaseFirestore db;
@@ -47,7 +47,7 @@ public class DetalheAtividadeActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {
-                        audioUrl = doc.getString("audioUrl");
+                        arquivoUrl = doc.getString("arquivoUrl");
                     }
                 });
         ImageButton btnPlay = findViewById(R.id.btnPlayAudio);
@@ -59,7 +59,7 @@ public class DetalheAtividadeActivity extends AppCompatActivity {
                 }
 
                 mediaPlayer = new MediaPlayer();
-                mediaPlayer.setDataSource(audioUrl);
+                mediaPlayer.setDataSource(arquivoUrl);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
 
