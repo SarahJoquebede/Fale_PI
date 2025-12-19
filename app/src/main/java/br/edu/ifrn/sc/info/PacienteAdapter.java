@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import br.edu.ifrn.sc.info.dominio.Paciente;
+
 // OBSERVAÇÃO: Se a classe Paciente e CadastrarPacienteActivity
 // estão nesta mesma pasta (br.edu.ifrn.sc.info),
 // você NÃO deve fazer o import delas. O Java já as reconhece.

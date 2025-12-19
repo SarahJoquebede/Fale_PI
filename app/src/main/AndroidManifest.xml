@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO"
-        tools:ignore="WrongManifestParent" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage,WrongManifestParent" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage,WrongManifestParent" />
-
+    <!-- Permissões Corrigidas -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -20,46 +16,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fale"
-        tools:targetApi="25"
-        >
-        <activity android:name=".BlocosActivity" />
-        <activity android:name=".UploadArquivos" />
-        <activity android:name=".ListaPacientesActivity" />
-        <activity android:name=".CadastrarPacienteActivity" />
+        tools:targetApi="25">
 
-
-
-        <activity
-            android:name="br.edu.ifrn.sc.info.MainActivity"
-            android:exported="false"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Fale" />
+        <!-- Activity Principal (Login) -->
         <activity
             android:name="br.edu.ifrn.sc.info.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.Fale" >
-
+            android:theme="@style/Theme.Fale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <!-- Demais Activities (Usando o caminho completo para evitar erro de pacote) -->
+        <activity android:name="br.edu.ifrn.sc.info.MainActivity" android:exported="false" android:theme="@style/Theme.Fale" />
+        <activity android:name="br.edu.ifrn.sc.info.BlocosActivity" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.UploadArquivos" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.ListaPacienteActivity" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.CadastrarPacienteActivity" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.DetalhePacienteActivity" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.DetalheAtividadeActivity" android:exported="false" />
 
         <activity
             android:name="br.edu.ifrn.sc.info.ListAudioActivity"
             android:exported="false"
-            android:label="@string/title_activity_list_audio"
-            android:theme="@style/Theme.Fale" />
+            android:label="@string/title_activity_list_audio" />
 
         <activity
             android:name="br.edu.ifrn.sc.info.ReviewActivity"
             android:exported="false"
-            android:label="@string/title_activity_review"
-            android:theme="@style/Theme.Fale" />
-
+            android:label="@string/title_activity_review" />
 
     </application>
-
 </manifest>
