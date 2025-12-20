@@ -60,12 +60,8 @@
         android:orientation="vertical"
         android:padding="16dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="344dp">
-
-        <TextView
-            android:text="Animais"
-            android:textSize="18sp"
-            android:textStyle="bold"  />
+        tools:layout_editor_absoluteY="344dp"
+        tools:ignore="MissingConstraints">
 
         <Button
             android:id="@+id/btnEnviarAnimais"
@@ -84,7 +80,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/blocos_preto"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="128dp" />
+        tools:layout_editor_absoluteY="128dp"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -102,5 +99,15 @@
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Animais"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="310dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

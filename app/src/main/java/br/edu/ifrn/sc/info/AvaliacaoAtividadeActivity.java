@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetalheAtividadeActivity extends AppCompatActivity {
+public class AvaliacaoAtividadeActivity extends AppCompatActivity {
 
     private EditText edtFeedback;
     private RatingBar ratingBar;
@@ -28,7 +28,7 @@ public class DetalheAtividadeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhe_atividade);
+        setContentView(R.layout.activity_avaliacao_atividade);
 
         edtFeedback = findViewById(R.id.edtFeedback);
         ratingBar = findViewById(R.id.ratingBar);

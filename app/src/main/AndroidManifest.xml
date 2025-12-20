@@ -37,7 +37,7 @@
         <activity android:name="br.edu.ifrn.sc.info.ListaPacienteActivity" android:exported="false" />
         <activity android:name="br.edu.ifrn.sc.info.CadastrarPacienteActivity" android:exported="false" />
         <activity android:name="br.edu.ifrn.sc.info.DetalhePacienteActivity" android:exported="false" />
-        <activity android:name="br.edu.ifrn.sc.info.DetalheAtividadeActivity" android:exported="false" />
+        <activity android:name="br.edu.ifrn.sc.info.AvaliacaoAtividadeActivity" android:exported="false" />
 
         <activity
             android:name="br.edu.ifrn.sc.info.ListAudioActivity"

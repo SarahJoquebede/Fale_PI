@@ -109,7 +109,8 @@
             android:text="Itens Adicionados:"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="198dp" />
+            tools:layout_editor_absoluteY="198dp"
+            tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:id="@+id/layout_items_list"
@@ -136,7 +137,8 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
             tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="176dp" />
+            tools:layout_editor_absoluteY="176dp"
+            tools:ignore="MissingConstraints" />
 
 
 
