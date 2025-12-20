@@ -9,18 +9,25 @@ public class Usuario {
     private Date dataNasc;
     private int cpf;
     private boolean tipo; //Profissional = true, Paciente = false
+    private String id;
 
     public Usuario() {
 
     }
 
-    public Usuario(String nome, String email, String senha, Date dataNasc, int cpf, boolean tipo) {
+    public Usuario(String nome, String email, String senha, Date dataNasc, int cpf, boolean tipo, String id) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.tipo = tipo;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {

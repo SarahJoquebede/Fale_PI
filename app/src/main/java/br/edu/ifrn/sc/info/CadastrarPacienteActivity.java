@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +18,14 @@ import java.util.Map;
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
     private EditText edtNome, edtDataNascimento, edtEmail, edtSenha;
-    private Button btnCadastrar, ibtnAtualizar, ibtnExcluir;
+    private Button btnCadastrar;
+        private ImageButton ibtnAtualizar, ibtnExcluir;
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
     private String idPaciente; // null = cadastro | preenchido = edição
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(v -> cadastrarPaciente());
         ibtnAtualizar.setOnClickListener(v -> atualizarPaciente());
         ibtnExcluir.setOnClickListener(v -> excluirPaciente());
+
     }
 
     // 🟦 CREATE
@@ -130,4 +134,5 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
                     finish();
                 });
     }
+
 }

@@ -53,15 +53,16 @@ public class ListaPacienteActivity extends AppCompatActivity {
                     if (value == null) return;
 
                     lista.clear();
+
                     for (DocumentSnapshot doc : value.getDocuments()) {
-                        Paciente p = new Paciente(
-                                doc.getId(),
-                                doc.getString("nome"),
-                                doc.getString("email")
-                        );
-                        lista.add(p);
+                        Paciente paciente = doc.toObject(Paciente.class);
+                        paciente.setId(doc.getId()); // 🔥 AQUI INTEGRA O ID
+                        lista.add(paciente);
                     }
+
                     adapter.notifyDataSetChanged();
                 });
     }
+
 }
+

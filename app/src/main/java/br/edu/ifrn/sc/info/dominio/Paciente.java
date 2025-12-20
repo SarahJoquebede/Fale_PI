@@ -2,11 +2,12 @@ package br.edu.ifrn.sc.info.dominio;
 
 import com.google.firebase.firestore.Exclude;
 
-public class Paciente {
+public class Paciente extends Usuario{
     private String id; // Alterado para String para ser compatível com IDs do Firestore
     private String nome;
     private String email;
     private String senha;
+
 
 
     public Paciente() {
