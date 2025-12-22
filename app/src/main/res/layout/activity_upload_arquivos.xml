@@ -77,7 +77,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="316dp"
             android:textColorLink="#A24545"
-            app:icon="@drawable/icon_audio"
+            app:icon="@drawable/microfone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

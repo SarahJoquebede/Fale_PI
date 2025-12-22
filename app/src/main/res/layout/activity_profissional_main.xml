@@ -68,7 +68,7 @@
 
             <include
                 android:id="@+id/card_pacientes"
-                layout="@drawable/card_num_paciente"
+                layout="@layout/card_num_paciente"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
@@ -76,7 +76,7 @@
 
             <include
                 android:id="@+id/card_avaliacoes"
-                layout="@drawable/card_avaliacoes_feitas"
+                layout="@layout/card_avaliacoes_feitas"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
