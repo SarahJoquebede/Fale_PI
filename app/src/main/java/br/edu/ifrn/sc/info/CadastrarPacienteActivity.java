@@ -19,7 +19,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
     private EditText edtNome, edtDataNascimento, edtEmail, edtSenha;
     private Button btnCadastrar;
-        private ImageButton ibtnAtualizar, ibtnExcluir;
+    private Button ibtnExcluir;
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -38,7 +38,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenha);
 
         btnCadastrar = findViewById(R.id.btnCadastrar);
-        ibtnAtualizar = findViewById(R.id.ibtnAtualizar);
+        Button ibtnAtualizar = findViewById(R.id.ibtnAtualizar);
         ibtnExcluir = findViewById(R.id.ibtnExcluir);
 
         auth = FirebaseAuth.getInstance();

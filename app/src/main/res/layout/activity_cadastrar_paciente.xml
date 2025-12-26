@@ -4,117 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-       >
+        android:layout_height="wrap_content"
+        android:padding="0dp">
 
         <include
-            android:id="@+id/include2"
-            layout="@layout/activity_cabecalho_model" />
+            android:id="@+id/include_header"
+            layout="@layout/activity_cabecalho_model"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
+            android:id="@+id/tvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/lilita_oone"
             android:text="Cadastrar paciente"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="49dp"
-            tools:layout_editor_absoluteY="131dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include_header" />
 
         <EditText
             android:id="@+id/edtNome"
-            android:layout_width="372dp"
-            android:layout_height="43dp"
-            android:hint="Nome"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="216dp" />
-
-        <EditText
-            android:id="@+id/edtDataNascimento"
-            android:layout_width="382dp"
-            android:layout_height="40dp"
-            android:hint="Data de nascimento"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="275dp" />
-
-        <EditText
-            android:id="@+id/edtTipoSessao"
-            android:layout_width="370dp"
-            android:layout_height="47dp"
-            android:hint="Tipo de sessão"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="440dp" />
+            android:layout_width="388dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:hint="Nome Completo"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
 
         <EditText
             android:id="@+id/edtEmail"
-            android:layout_width="380dp"
-            android:layout_height="42dp"
-            android:hint="Email (login)"
+            android:layout_width="387dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="12dp"
+            android:hint="E-mail"
             android:inputType="textEmailAddress"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="19dp"
-            tools:layout_editor_absoluteY="327dp" />
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtNome" />
 
         <EditText
             android:id="@+id/edtSenha"
-            android:layout_width="383dp"
-            android:layout_height="43dp"
+            android:layout_width="392dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="12dp"
             android:hint="Senha"
             android:inputType="textPassword"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="380dp" />
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtEmail" />
 
+        <EditText
+            android:id="@+id/edtDataNascimento"
+            android:layout_width="381dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="12dp"
+            android:hint="Data de Nascimento (DD/MM/AAAA)"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtSenha" />
 
+        <!-- Botão Cadastrar (Aparece quando é novo cadastro) -->
         <Button
             android:id="@+id/btnCadastrar"
-            android:layout_width="136dp"
-            android:layout_height="45dp"
+            android:layout_width="371dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="24dp"
             android:text="Cadastrar"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="263dp"
-            tools:layout_editor_absoluteY="576dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtDataNascimento" />
+
+        <!-- Botões de Atualizar e Excluir (Lado a lado, aparecem na edição) -->
+        <Button
+            android:id="@+id/ibtnAtualizar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Atualizar"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/btnCadastrar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ibtnExcluir" />
+
+        <Button
+            android:id="@+id/ibtnExcluir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Excluir"
+            android:backgroundTint="#BF3636"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/ibtnAtualizar"
+            app:layout_constraintStart_toEndOf="@id/ibtnAtualizar"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="#313133"
-            app:srcCompat="@drawable/lista_img"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="130dp" />
-
-        <ImageButton
-            android:id="@+id/ibtnExcluir"
-            android:layout_width="46dp"
-            android:layout_height="48dp"
-            android:tint="#003F51B5"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_delete"
-            tools:layout_editor_absoluteY="568dp" />
-
-        <ImageButton
-            android:id="@+id/ibtnAtualizar"
-            android:layout_width="53dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="568dp"
-            android:layout_marginEnd="124dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/btnCadastrar"
+            android:layout_marginTop="136dp"
+            android:layout_marginEnd="4dp"
+            app:tint="#050505"
+            app:layout_constraintEnd_toStartOf="@+id/tvTitulo"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+            app:srcCompat="@drawable/lista_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

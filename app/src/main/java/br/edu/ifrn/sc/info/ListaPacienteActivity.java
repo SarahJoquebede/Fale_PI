@@ -18,11 +18,8 @@ import br.edu.ifrn.sc.info.dominio.Paciente;
 
 public class ListaPacienteActivity extends AppCompatActivity {
 
-    private RecyclerView rvPacientes;
-    private FloatingActionButton fabAddPaciente;
-
     private FirebaseFirestore db;
-    private List<Paciente> lista = new ArrayList<>();
+    private final List<Paciente> lista = new ArrayList<>();
     private PacienteAdapter adapter;
 
     @Override
@@ -30,8 +27,8 @@ public class ListaPacienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listapacientes);
 
-        rvPacientes = findViewById(R.id.rvPacientes);
-        fabAddPaciente = findViewById(R.id.fabAddPaciente);
+        RecyclerView rvPacientes = findViewById(R.id.rvPacientes);
+        FloatingActionButton fabAddPaciente = findViewById(R.id.fabAddPaciente);
 
         db = FirebaseFirestore.getInstance();
 

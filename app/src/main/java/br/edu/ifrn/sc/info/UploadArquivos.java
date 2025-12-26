@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.google.firebase.firestore.SetOptions;
+
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -43,13 +45,12 @@ public class UploadArquivos extends AppCompatActivity {
     private EditText mSilabicaEditText;
     private Button mAddItemButton;
     private TextView mImageStatus, mAudioStatus;
-    private String blocoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_arquivos);
-        blocoSelecionado = getIntent().getStringExtra("bloco");
+        String blocoSelecionado = getIntent().getStringExtra("bloco");
 
 
         // Recebe o ID do tema da tela anterior
@@ -72,6 +73,10 @@ public class UploadArquivos extends AppCompatActivity {
         mAddItemButton.setOnClickListener(v -> {
             salvarAtividade();
         });
+        StorageReference storage = FirebaseStorage
+                .getInstance("gs://projetinho-ac630.appspot.com")
+                .getReference();
+
     }
     private void salvarAtividade() {
 
@@ -168,7 +173,11 @@ public class UploadArquivos extends AppCompatActivity {
 
     // Método para salvar o item (metadados) no array 'items' do documento do Tema no Firestore
     private void saveItemToFirestore(String palavra, String silabica, String imageUrl, String audioUrl) {
-        DocumentReference themeRef = FirebaseFirestore.getInstance().collection("themes").document(mThemeId);
+
+        DocumentReference themeRef =
+                FirebaseFirestore.getInstance()
+                        .collection("themes")
+                        .document(mThemeId);
 
         Map<String, Object> newItem = new HashMap<>();
         newItem.put("palavra", palavra);
@@ -176,23 +185,19 @@ public class UploadArquivos extends AppCompatActivity {
         newItem.put("imageUrl", imageUrl);
         newItem.put("audioUrl", audioUrl);
 
-        // Usa FieldValue.arrayUnion para adicionar o novo mapa ao array 'items'
-        themeRef.update("items", FieldValue.arrayUnion(newItem))
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", FieldValue.arrayUnion(newItem));
+
+        themeRef
+                .set(data, SetOptions.merge())   // 👈 cria ou atualiza
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(UploadArquivos.this, "Item " + palavra + " adicionado com sucesso", Toast.LENGTH_SHORT).show();
-                    // Limpa o formulário
-                    mPalavraEditText.setText("");
-                    mSilabicaEditText.setText("");
-                    mImageUri = null;
-                    mAudioUri = null;
-                    mImageStatus.setText("Nenhuma imagem selecionada.");
-                    mAudioStatus.setText("Nenhum áudio selecionado/gravado.");
-                    mAddItemButton.setEnabled(true);
+                    Toast.makeText(this, "Item salvo no Firestore!", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(UploadArquivos.this, "Falha ao salvar item no Firestore.", Toast.LENGTH_SHORT).show();
-                    mAddItemButton.setEnabled(true);
+                    Toast.makeText(this, "Erro ao salvar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-
     }
+
+
 }
+

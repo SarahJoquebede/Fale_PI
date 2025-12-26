@@ -51,7 +51,7 @@
 
         <Button
             android:id="@+id/btn_select_image"
-            android:layout_width="68dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="396dp"
@@ -72,8 +72,8 @@
 
         <Button
             android:id="@+id/btn_record_audio"
-            android:layout_width="69dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="44dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="316dp"
             android:textColorLink="#A24545"
@@ -122,7 +122,7 @@
             tools:ignore="MissingConstraints" />
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/ivBlocos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -130,16 +130,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/blocos_preto" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="176dp"
-            tools:ignore="MissingConstraints" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

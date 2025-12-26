@@ -18,10 +18,9 @@ import com.google.firebase.firestore.*;
 import java.util.ArrayList;
 import java.util.List;
 public class ListAudioActivity extends AppCompatActivity{
-    private RecyclerView rvAudios;
     private FirebaseFirestore db;
     private FirebaseUser user;
-    private List<AudioItem> audioList = new ArrayList<>();
+    private final List<AudioItem> audioList = new ArrayList<>();
     private AudioAdapter adapter;
 
     @Override
@@ -29,7 +28,7 @@ public class ListAudioActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_audios);
 
-        rvAudios = findViewById(R.id.rvAudios);
+        RecyclerView rvAudios = findViewById(R.id.rvAudios);
         rvAudios.setLayoutManager(new LinearLayoutManager(this));
 
         db = FirebaseFirestore.getInstance();

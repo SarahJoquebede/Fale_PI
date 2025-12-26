@@ -25,19 +25,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="173dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:text="🎙️ "
-        android:visibility="visible"
-        app:icon="@drawable/btnouvir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.691"
-        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnStop"
@@ -81,20 +68,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnPlayAtividade"
-        android:layout_width="169dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="32dp"
-        android:text="🔊 Ouvir áudio"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.983"
-        app:layout_constraintStart_toEndOf="@+id/imgAtividade"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.693"
-        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -113,28 +86,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="43dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp"
+    <ImageButton
+        android:id="@+id/btnStart"
+        android:layout_width="84dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="80dp"
+        android:background="#00FFFFFF"
         android:src="@drawable/microfone"
-        app:layout_constraintEnd_toEndOf="@+id/btnStart"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnStart"
-        app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
+        android:text="🎙️ "
+        android:visibility="visible"
+        app:icon="@drawable/microfone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+    <ImageButton
+        android:id="@+id/btnPlayAtividade"
+        android:layout_width="80dp"
+        android:layout_height="79dp"
+        android:background="#00FFFFFF"
         android:src="@drawable/btnouvir"
-        app:layout_constraintEnd_toEndOf="@+id/btnPlayAtividade"
-        app:layout_constraintHorizontal_bias="0.836"
-        app:layout_constraintStart_toStartOf="@+id/btnPlayAtividade"
-        app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
+        android:text="🔊 Ouvir áudio"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.758"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.682"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

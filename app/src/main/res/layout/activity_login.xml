@@ -19,27 +19,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="280dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/lilita_oone"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:textColorLink="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
     <EditText
         android:id="@+id/etSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="276dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/lilita_oone"
         android:hint="Senha"
         android:inputType="textPassword"
         android:textColorLink="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="108dp"
         android:background="@drawable/menu_background_rounded"
         android:fontFamily="@font/lilita_oone"
         android:text="Registrar"

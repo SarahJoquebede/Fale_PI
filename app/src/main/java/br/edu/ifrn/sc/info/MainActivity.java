@@ -36,7 +36,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
 
-    private Button btnStart;
+    private ImageButton btnStart;
     private Button btnStop;
     private Button btnList;
     private TextView tvStatus;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private Button botaoPontos;
     private RecyclerView rvPendentes;
     private ImageView imgAtividade;
-    private Button btnPlayAtividade;
+    private ImageButton btnPlayAtividade;
 
     private String imageUrl;
     private String audioUrl;
