@@ -30,7 +30,7 @@
         <EditText
             android:id="@+id/edit_palavra"
             android:layout_width="280dp"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginTop="212dp"
             android:layout_marginEnd="120dp"
             android:fontFamily="@font/lilita_oone"
@@ -41,7 +41,7 @@
         <EditText
             android:id="@+id/edit_silabica"
             android:layout_width="279dp"
-            android:layout_height="41dp"
+            android:layout_height="48dp"
             android:layout_marginTop="256dp"
             android:layout_marginEnd="120dp"
             android:fontFamily="@font/lilita_oone"
@@ -52,10 +52,11 @@
         <Button
             android:id="@+id/btn_select_image"
             android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="396dp"
             app:icon="@drawable/icon_upload"
+            android:contentDescription="@string/botao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="#403C3C" />
@@ -73,10 +74,11 @@
         <Button
             android:id="@+id/btn_record_audio"
             android:layout_width="50dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="316dp"
             android:textColorLink="#A24545"
+            android:contentDescription="@string/botao"
             app:icon="@drawable/microfone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

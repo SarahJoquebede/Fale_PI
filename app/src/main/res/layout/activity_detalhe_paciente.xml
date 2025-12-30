@@ -31,12 +31,14 @@
             android:id="@+id/tvNomePaciente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="136dp"
             android:fontFamily="@font/lilita_oone"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tvPaciente"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="114dp"
-            tools:layout_editor_absoluteY="136dp"
             tools:text="Nome do paciente" />
 
         <TextView
@@ -57,18 +59,23 @@
             android:id="@+id/tvInfoPaciente"
             android:layout_width="202dp"
             android:layout_height="0dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="150dp"
-            tools:layout_editor_absoluteY="194dp" />
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="43dp"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/tvNomePaciente"
+            tools:ignore="MissingConstraints" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="43dp"
+            android:fontFamily="@font/lilita_oone"
             android:text="Atividades enviadas"
             android:textStyle="bold"
-            android:fontFamily="@font/lilita_oone"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPaciente"
             tools:ignore="MissingConstraints" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -89,8 +96,9 @@
             android:fontFamily="@font/lilita_oone"
             android:text="Enviar nova atividade"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="34dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

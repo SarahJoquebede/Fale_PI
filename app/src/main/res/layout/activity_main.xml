@@ -11,17 +11,17 @@
     tools:context="br.edu.ifrn.sc.info.MainActivity">
     <include
         android:id="@+id/include"
-        layout="@layout/activity_teste2" />
+        layout="@layout/activity_cabecalho_model" />
 
     <TextView
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="136dp"
-        android:text="Toque em Gravar"
+        android:text="@string/toque_em_gravar"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
         tools:ignore="MissingConstraints" />
 
@@ -29,24 +29,25 @@
     <Button
         android:id="@+id/btnStop"
         android:layout_width="165dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginTop="524dp"
-        android:layout_marginEnd="124dp"
         android:enabled="false"
         android:text="⏹️ Parar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnList"
         android:layout_width="166dp"
-        android:layout_height="41dp"
+        android:layout_height="48dp"
         android:layout_marginTop="564dp"
-        android:layout_marginEnd="124dp"
         android:enabled="true"
-        android:text="Listar"
+        android:text="@string/listar"
+        android:contentDescription="@string/listar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -63,9 +64,9 @@
         android:layout_width="251dp"
         android:layout_height="257dp"
         android:layout_marginTop="156dp"
-        android:layout_marginEnd="80dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -73,13 +74,13 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="400dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="76dp"
 
+        android:layout_marginBottom="5dp"
         android:background="#505FA6"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:labelVisibilityMode="unlabeled"
 
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
@@ -94,6 +95,7 @@
         android:background="#00FFFFFF"
         android:src="@drawable/microfone"
         android:text="🎙️ "
+        android:contentDescription="@string/botao"
         android:visibility="visible"
         app:icon="@drawable/microfone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,14 +108,14 @@
         android:id="@+id/btnPlayAtividade"
         android:layout_width="80dp"
         android:layout_height="79dp"
+        android:layout_marginEnd="80dp"
         android:background="#00FFFFFF"
         android:src="@drawable/btnouvir"
         android:text="🔊 Ouvir áudio"
+        android:contentDescription="@string/listar"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.758"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.682"
         tools:ignore="MissingConstraints" />

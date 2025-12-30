@@ -22,7 +22,6 @@
         <activity
             android:name="br.edu.ifrn.sc.info.LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login"
             android:theme="@style/Theme.Fale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

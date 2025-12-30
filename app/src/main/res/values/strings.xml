@@ -13,6 +13,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="botao">Botão</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -49,4 +51,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="toque_em_gravar">Toque em Gravar</string>
+    <string name="listar">Listar</string>
 </resources>

@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Se não for nulo, inicia o MainActivity e finaliza essa tela (finish();)
         if (currentUser != null) {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, BlocosActivity.class));
             finish();
         }
 
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         //Tenta fazer o login, o listener Success excuta se deu crt e abre o mainActivity, se falhar mostra um Toast
         auth.signInWithEmailAndPassword(email, senha)
                 .addOnSuccessListener(r -> {
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, BlocosActivity.class));
                     String email1 = r.getUser().getEmail();
                     Toast.makeText(this, email1, Toast.LENGTH_SHORT).show();
                     finish();

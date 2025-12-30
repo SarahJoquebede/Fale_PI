@@ -18,13 +18,13 @@
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="268dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/lilita_oone"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:textColorLink="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
@@ -32,37 +32,39 @@
         android:id="@+id/etSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="416dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/lilita_oone"
         android:hint="Senha"
         android:inputType="textPassword"
         android:textColorLink="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/menu_background_rounded"
-        android:backgroundTint="#CDCFD7"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/menu_rectangle"
+        android:backgroundTint="#2044D3"
         android:fontFamily="@font/lilita_oone"
         android:text="Entrar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar" />
+        app:layout_constraintTop_toBottomOf="@+id/etSenha" />
 
     <Button
         android:id="@+id/btnRegistrar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/menu_background_rounded"
+        android:layout_height="48dp"
+        android:layout_marginTop="92dp"
+        android:background="@drawable/menu_rectangle"
         android:fontFamily="@font/lilita_oone"
         android:text="Registrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSenha" />
 
@@ -86,13 +88,13 @@
 
         android:layout_width="349dp"
         android:layout_height="185dp"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="136dp"
         android:background="#00F6F6F6"
         android:fontFamily="@font/lilita_oone"
         android:text="Olá, pequeno(a) explorador(a)!"
         android:textColor="#FFFFFF"
         android:textSize="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
