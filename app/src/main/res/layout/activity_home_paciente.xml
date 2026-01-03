@@ -23,7 +23,10 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             app:srcCompat="@drawable/home_img"
-            app:tint="#F6FFFFFF" /> <!-- Sua Logo aqui -->
+            app:tint="#F6FFFFFF"
+            android:contentDescription="@string/desc_foto_perfil"
+
+            />
 
         <TextView
             android:id="@+id/txtTitulo"
@@ -31,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/lilita_oone"
-            android:text="Meu perfil"
+            android:text="@string/perfil_titulo"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -59,6 +62,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:backgroundTint="#FFFFFF"
+                android:contentDescription="@null"
                 app:srcCompat="@drawable/perfil" />
 
             <LinearLayout
@@ -72,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lilita_oone"
-                    android:text="Nome do Paciente"
+                    android:text="@string/placeholder_nome"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -82,14 +87,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Idade: -"
+                    android:text="@string/placeholder_idade"
                     android:textColor="#666666" />
 
                 <TextView
                     android:id="@+id/txtResponsavel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Responsável: -"
+                    android:text="@string/placeholder_responsavel"
                     android:textColor="#666666" />
             </LinearLayout>
         </LinearLayout>
@@ -103,7 +108,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/lilita_oone"
-        android:text="Atividades enviadas"
+        android:text="@string/atividades_enviadas"
         android:textColor="#4755A7"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -126,12 +131,13 @@
     <Button
         android:id="@+id/btnAbrirBlocos"
         android:layout_width="match_parent"
+        android:text="@string/btn_abrir_atividades"
         android:layout_height="56dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#4755A7"
         android:fontFamily="@font/lilita_oone"
-        android:text="Abrir atividades"
+
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"

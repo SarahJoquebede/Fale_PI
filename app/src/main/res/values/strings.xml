@@ -7,11 +7,19 @@
     <string name="voltar">Voltar</string>
     <string name="title_activity_perfil_paciente">perfil_paciente</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="placeholder_nome">Nome do Paciente</string>
+    <string name="placeholder_idade">Idade: -</string>
+    <string name="placeholder_responsavel">Responsável: -</string>
+    <string name="desc_foto_perfil">Foto de perfil do paciente</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="btn_abrir_atividades">Abrir atividades</string>
+    <string name="perfil_titulo">Meu perfil</string>
+    <string name="atividades_enviadas">Atividades enviadas</string>
 
     <string name="botao">Botão</string>
 
