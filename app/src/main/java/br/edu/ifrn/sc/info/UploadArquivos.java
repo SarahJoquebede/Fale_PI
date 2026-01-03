@@ -1,7 +1,5 @@
 package br.edu.ifrn.sc.info;
 
-// AddItemActivity.java
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,25 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import com.google.firebase.firestore.SetOptions;
+import br.edu.ifrn.sc.info.utils.FirebaseUtils;
 
-
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class UploadArquivos extends AppCompatActivity {
 
@@ -37,7 +23,9 @@ public class UploadArquivos extends AppCompatActivity {
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int REQUEST_PERMISSION = 3;
 
-    private String mThemeId; // ID do Tema passado via Intent
+    // Variável que identifica a qual tema essa atividade pertence
+    private String mThemeId;
+
     private Uri mImageUri;
     private Uri mAudioUri;
 
@@ -46,50 +34,43 @@ public class UploadArquivos extends AppCompatActivity {
     private Button mAddItemButton;
     private TextView mImageStatus, mAudioStatus;
 
+    private FirebaseUtils firebaseUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_arquivos);
-        String blocoSelecionado = getIntent().getStringExtra("bloco");
 
+        firebaseUtils = new FirebaseUtils();
 
-        // Recebe o ID do tema da tela anterior
+        // 1. Tenta recuperar o ID do tema vindo da tela anterior
         mThemeId = getIntent().getStringExtra("THEME_ID");
+
+        // 2. Lógica de segurança/teste:
         if (mThemeId == null) {
-            Toast.makeText(this, "Erro: ID do Tema não encontrado.", Toast.LENGTH_LONG).show();
-            finish();
-            return;
+            // Se for nulo, definimos um ID padrão para que você consiga TESTAR a tela agora
+            mThemeId = "tema_geral_teste";
+            Toast.makeText(this, "Aviso: Usando ID de teste (tema_geral_teste)", Toast.LENGTH_SHORT).show();
         }
 
+        initViews();
+    }
+
+    private void initViews() {
         mPalavraEditText = findViewById(R.id.edit_palavra);
         mSilabicaEditText = findViewById(R.id.edit_silabica);
         mAddItemButton = findViewById(R.id.btn_add_item);
         mImageStatus = findViewById(R.id.status_image);
         mAudioStatus = findViewById(R.id.status_audio);
 
+        // Seleção de Imagem
         findViewById(R.id.btn_select_image).setOnClickListener(v -> selectFile(PICK_IMAGE_REQUEST, "image/*"));
+
+        // Seleção de Áudio com verificação de permissão
         findViewById(R.id.btn_record_audio).setOnClickListener(v -> checkPermissionAndSelectAudio());
-        mAddItemButton.setOnClickListener(v -> validateAndUploadItem());
-        mAddItemButton.setOnClickListener(v -> {
-            salvarAtividade();
-        });
-        StorageReference storage = FirebaseStorage
-                .getInstance("gs://projetinho-ac630.appspot.com")
-                .getReference();
 
-    }
-    private void salvarAtividade() {
-
-        String palavra = mPalavraEditText.getText().toString().trim();
-        String silabas = mSilabicaEditText.getText().toString().trim();
-
-        if (palavra.isEmpty() || silabas.isEmpty()) {
-            Toast.makeText(this,
-                    "Preencha todos os campos",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        finish();
+        // Botão Final de Envio
+        mAddItemButton.setOnClickListener(v -> validateAndUpload());
     }
 
     private void selectFile(int requestCode, String type) {
@@ -102,7 +83,6 @@ public class UploadArquivos extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSION);
         } else {
-            // Se as permissões estiverem ok, abre o seletor de áudio (ou inicia a gravação)
             selectFile(PICK_AUDIO_REQUEST, "audio/*");
         }
     }
@@ -110,94 +90,52 @@ public class UploadArquivos extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == PICK_IMAGE_REQUEST) {
                 mImageUri = data.getData();
-                mImageStatus.setText("Imagem selecionada: " + mImageUri.getLastPathSegment());
+                mImageStatus.setText("Imagem selecionada com sucesso!");
             } else if (requestCode == PICK_AUDIO_REQUEST) {
                 mAudioUri = data.getData();
-                mAudioStatus.setText("Áudio selecionado: " + mAudioUri.getLastPathSegment());
+                mAudioStatus.setText("Áudio selecionado com sucesso!");
             }
         }
     }
 
-    private void validateAndUploadItem() {
-        final String palavra = mPalavraEditText.getText().toString().trim();
-        final String silabica = mSilabicaEditText.getText().toString().trim();
+    private void validateAndUpload() {
+        String palavra = mPalavraEditText.getText().toString().trim();
+        String silabica = mSilabicaEditText.getText().toString().trim();
 
         if (palavra.isEmpty() || mImageUri == null || mAudioUri == null) {
-            Toast.makeText(this, "Preencha a palavra e selecione Imagem e Áudio.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Preencha a palavra e selecione os arquivos primeiro.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        mAddItemButton.setEnabled(false); // Desabilita o botão
+        mAddItemButton.setEnabled(false); // Evita cliques duplos durante o upload
+        Toast.makeText(this, "Fazendo upload... aguarde.", Toast.LENGTH_SHORT).show();
 
-        // 1. Upload da Imagem
-        StorageReference imageRef = FirebaseStorage.getInstance().getReference("activities/" + mThemeId)
-                .child(UUID.randomUUID().toString() + "_img.jpg");
-        UploadTask imageUploadTask = imageRef.putFile(mImageUri);
+        // Enviando para o Firebase usando o mThemeId (ID do Tema)
+        firebaseUtils.uploadActivityItem(mThemeId, palavra, silabica, mImageUri, mAudioUri, new FirebaseUtils.UploadCallback() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(UploadArquivos.this, "Atividade salva com sucesso!", Toast.LENGTH_SHORT).show();
+                resetForm();
+            }
 
-        // 2. Upload do Áudio
-        StorageReference audioRef = FirebaseStorage.getInstance().getReference("activities/" + mThemeId)
-                .child(UUID.randomUUID().toString() + "_audio.mp3");
-        UploadTask audioUploadTask = audioRef.putFile(mAudioUri);
-
-        // 3. Executa ambas as tarefas e espera o resultado
-        Task<Uri> getImageUriTask = imageUploadTask.continueWithTask(task -> {
-            if (!task.isSuccessful()) { throw task.getException(); }
-            return imageRef.getDownloadUrl();
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(UploadArquivos.this, "Falha: " + errorMessage, Toast.LENGTH_LONG).show();
+                mAddItemButton.setEnabled(true);
+            }
         });
-
-        Task<Uri> getAudioUriTask = audioUploadTask.continueWithTask(task -> {
-            if (!task.isSuccessful()) { throw task.getException(); }
-            return audioRef.getDownloadUrl();
-        });
-
-        // 4. Combina as tarefas de download URL
-        Tasks.whenAllSuccess(getImageUriTask, getAudioUriTask)
-                .addOnSuccessListener(results -> {
-                    // Resultados[0] é a URL da Imagem, Resultados[1] é a URL do Áudio
-                    String imageUrl = results.get(0).toString();
-                    String audioUrl = results.get(1).toString();
-
-                    // 5. Salva os metadados no Firestore
-                    saveItemToFirestore(palavra, silabica, imageUrl, audioUrl);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(UploadArquivos.this, "Falha no upload de um ou ambos arquivos: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    mAddItemButton.setEnabled(true);
-                });
     }
 
-
-    // Método para salvar o item (metadados) no array 'items' do documento do Tema no Firestore
-    private void saveItemToFirestore(String palavra, String silabica, String imageUrl, String audioUrl) {
-
-        DocumentReference themeRef =
-                FirebaseFirestore.getInstance()
-                        .collection("themes")
-                        .document(mThemeId);
-
-        Map<String, Object> newItem = new HashMap<>();
-        newItem.put("palavra", palavra);
-        newItem.put("silabica", silabica);
-        newItem.put("imageUrl", imageUrl);
-        newItem.put("audioUrl", audioUrl);
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("items", FieldValue.arrayUnion(newItem));
-
-        themeRef
-                .set(data, SetOptions.merge())   // 👈 cria ou atualiza
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Item salvo no Firestore!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erro ao salvar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+    private void resetForm() {
+        mPalavraEditText.setText("");
+        mSilabicaEditText.setText("");
+        mImageUri = null;
+        mAudioUri = null;
+        mImageStatus.setText("Nenhuma imagem selecionada.");
+        mAudioStatus.setText("Nenhum áudio selecionado.");
+        mAddItemButton.setEnabled(true);
     }
-
-
 }
-
