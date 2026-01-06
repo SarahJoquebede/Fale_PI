@@ -1,138 +1,94 @@
 package br.edu.ifrn.sc.info;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import br.edu.ifrn.sc.info.R;
+
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
-    private EditText edtNome, edtDataNascimento, edtEmail, edtSenha;
+    private EditText edtNome, edtEmail, edtSenha, edtDataNasc;
     private Button btnCadastrar;
-    private Button ibtnExcluir;
 
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
-    private String idPaciente; // null = cadastro | preenchido = edição
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_paciente);
 
-        edtNome = findViewById(R.id.edtNome);
-        edtDataNascimento = findViewById(R.id.edtDataNascimento);
-        edtEmail = findViewById(R.id.edtEmail);
-        edtSenha = findViewById(R.id.edtSenha);
-
-        btnCadastrar = findViewById(R.id.btnCadastrar);
-        Button ibtnAtualizar = findViewById(R.id.ibtnAtualizar);
-        ibtnExcluir = findViewById(R.id.ibtnExcluir);
-
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // 🔎 Verifica se veio um paciente para edição
-        idPaciente = getIntent().getStringExtra("idPaciente");
+        edtNome = findViewById(R.id.edtNome);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtSenha = findViewById(R.id.edtSenha);
+        edtDataNasc = findViewById(R.id.edtDataNascimento);
+        btnCadastrar = findViewById(R.id.btnCadastrar);
 
-        if (idPaciente != null) {
-            carregarDadosPaciente();
-            btnCadastrar.setVisibility(View.GONE);
-            ibtnAtualizar.setVisibility(View.VISIBLE);
-            ibtnExcluir.setVisibility(View.VISIBLE);
-        }
-
-        btnCadastrar.setOnClickListener(v -> cadastrarPaciente());
-        ibtnAtualizar.setOnClickListener(v -> atualizarPaciente());
-        ibtnExcluir.setOnClickListener(v -> excluirPaciente());
-
+        btnCadastrar.setOnClickListener(v -> cadastrarNoSistema());
     }
 
-    // 🟦 CREATE
-    private void cadastrarPaciente() {
-
-        String nome = edtNome.getText().toString();
-        String nascimento = edtDataNascimento.getText().toString();
-        String email = edtEmail.getText().toString();
-        String senha = edtSenha.getText().toString();
+    private void cadastrarNoSistema() {
+        String nome = edtNome.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
+        String senha = edtSenha.getText().toString().trim();
+        String dataNasc = edtDataNasc.getText().toString().trim();
 
         if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Preencha os campos obrigatórios!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        auth.createUserWithEmailAndPassword(email, senha)
-                .addOnSuccessListener(result -> {
-                    String uid = result.getUser().getUid();
+        btnCadastrar.setEnabled(false);
 
-                    Map<String, Object> paciente = new HashMap<>();
-                    paciente.put("nome", nome);
-                    paciente.put("dataNascimento", nascimento);
-                    paciente.put("email", email);
-
-                    db.collection("pacientes")
-                            .document(uid)
-                            .set(paciente)
-                            .addOnSuccessListener(unused -> {
-                                Toast.makeText(this, "Paciente cadastrado", Toast.LENGTH_SHORT).show();
-                                finish();
-                            });
+        // 1. Criar o acesso no Firebase Authentication
+        mAuth.createUserWithEmailAndPassword(email, senha)
+                .addOnSuccessListener(authResult -> {
+                    String uid = authResult.getUser().getUid();
+                    salvarEmAmbasColecoes(uid, nome, email, dataNasc);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    btnCadastrar.setEnabled(true);
                 });
     }
 
-    // 🟦 READ
-    private void carregarDadosPaciente() {
-        db.collection("pacientes")
-                .document(idPaciente)
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists()) {
-                        edtNome.setText(doc.getString("nome"));
-                        edtDataNascimento.setText(doc.getString("dataNascimento"));
-                        edtEmail.setText(doc.getString("email"));
-
-                        // senha não é recuperável
-                        edtSenha.setVisibility(View.GONE);
-                    }
-                });
-    }
-
-    // 🟦 UPDATE
-    private void atualizarPaciente() {
+    private void salvarEmAmbasColecoes(String uid, String nome, String email, String dataNasc) {
+        // Preparar os dados
         Map<String, Object> dados = new HashMap<>();
-        dados.put("nome", edtNome.getText().toString());
-        dados.put("dataNascimento", edtDataNascimento.getText().toString());
+        dados.put("id", uid);
+        dados.put("nome", nome);
+        dados.put("email", email);
+        dados.put("dataNasc", dataNasc);
+        dados.put("tipo", false); // Indica que é um paciente
 
-        db.collection("pacientes")
-                .document(idPaciente)
-                .update(dados)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Dados atualizados", Toast.LENGTH_SHORT).show();
+        // 2. Criar as tarefas de salvamento para as DUAS coleções ao mesmo tempo
+        Task<Void> taskUsuarios = db.collection("usuarios").document(uid).set(dados);
+        Task<Void> taskPacientes = db.collection("pacientes").document(uid).set(dados);
+
+        // 3. Esperar que AMBAS terminem com sucesso
+        Tasks.whenAll(taskUsuarios, taskPacientes)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Paciente cadastrado em ambas coleções!", Toast.LENGTH_SHORT).show();
                     finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao sincronizar bancos: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    btnCadastrar.setEnabled(true);
                 });
     }
-
-    // 🟦 DELETE
-    private void excluirPaciente() {
-        db.collection("pacientes")
-                .document(idPaciente)
-                .delete()
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Paciente excluído", Toast.LENGTH_SHORT).show();
-                    finish();
-                });
-    }
-
 }

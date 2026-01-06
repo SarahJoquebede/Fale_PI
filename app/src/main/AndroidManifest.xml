@@ -20,11 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fale"
         tools:targetApi="25">
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.Fale" />
         <!-- Activity Principal (Login) -->
         <activity
             android:name=".LoginActivity"
