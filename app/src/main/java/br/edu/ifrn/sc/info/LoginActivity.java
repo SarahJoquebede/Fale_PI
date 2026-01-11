@@ -2,90 +2,102 @@ package br.edu.ifrn.sc.info;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class LoginActivity extends AppCompatActivity {
 
-    //Iniciação dos componentes da UI e config da autenticação
-    private EditText etEmail, etSenha;
-    private Button btnLogin, btnRegistrar;
-    private FirebaseAuth auth; //Variável para interagir com o Firebase
+    private EditText edtEmail, edtSenha;
+    private Button btnLogin;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); //Chama a implementação do metodo da classe pai (AppCompactActivity)
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        setContentView(R.layout.activity_login);//Define qual arquivo xml vai abrir
+        // 1. Inicializa o Firebase Auth e o Firestore
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        auth = FirebaseAuth.getInstance();//Obtem a instancia principal do Firebase
-
-        //Associa as variaveis aos compoentes pelo ID
-        etEmail = findViewById(R.id.etEmail);
-        etSenha = findViewById(R.id.etSenha);
+        // 2. Conecta os componentes do XML com o Java
+        edtEmail = findViewById(R.id.edtEmail);
+        edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
-        btnRegistrar = findViewById(R.id.btnRegistrar);
 
-        //Verifica se ja esta logado
-        FirebaseUser currentUser = auth.getCurrentUser();
+        // 3. Configura o clique do botão de login
+        btnLogin.setOnClickListener(v -> {
+            String email = edtEmail.getText().toString().trim();
+            String senha = edtSenha.getText().toString().trim();
 
-        //Se não for nulo, inicia o MainActivity e finaliza essa tela (finish();)
-        if (currentUser != null) {
-            startActivity(new Intent(this, BlocosActivity.class));
-            finish();
-        }
-
-        //Quando esses botões forem clicados as respectivas funções vão ser executadas
-        btnLogin.setOnClickListener(v -> login());
-        btnRegistrar.setOnClickListener(v -> registrar());
+            if (email.isEmpty() || senha.isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Preencha e-mail e senha.", Toast.LENGTH_SHORT).show();
+            } else {
+                fazerLogin(email, senha);
+            }
+        });
     }
 
-    private void login() {
-        //Pega oq foi escrito nos campos
-        String email = etEmail.getText().toString();
-        String senha = etSenha.getText().toString();
+    private void fazerLogin(String email, String senha) {
+        btnLogin.setEnabled(false); // Desabilita o botão para evitar cliques duplos
 
-        //Verifica se algum campo está vazio (Empty), se tiver vai mostrar uma mensagem curta (Toast)
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)) {
-            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Tenta fazer o login, o listener Success excuta se deu crt e abre o mainActivity, se falhar mostra um Toast
-        auth.signInWithEmailAndPassword(email, senha)
-                .addOnSuccessListener(r -> {
-                    startActivity(new Intent(this, BlocosActivity.class));
-                    String email1 = r.getUser().getEmail();
-                    Toast.makeText(this, email1, Toast.LENGTH_SHORT).show();
-                    finish();
+        // 4. Tenta fazer o login com o e-mail e senha fornecidos
+        mAuth.signInWithEmailAndPassword(email, senha)
+                .addOnSuccessListener(authResult -> {
+                    // Se o login for bem-sucedido, pega o ID do usuário
+                    String uid = authResult.getUser().getUid();
+                    // Chama a função que vai verificar o tipo de usuário
+                    verificarTipoUsuario(uid);
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    // Se o login falhar, exibe uma mensagem de erro
+                    Toast.makeText(LoginActivity.this, "Erro no login: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    btnLogin.setEnabled(true); // Reabilita o botão
+                });
     }
 
-    private void registrar() {
-        //Pega oq foi escrito nos campos
-        String email = etEmail.getText().toString();
-        String senha = etSenha.getText().toString();
+    private void verificarTipoUsuario(String uid) {
+        // 5. Busca o documento do usuário na coleção "usuarios" usando o ID
+        db.collection("usuarios").document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // 6. Verifica se o campo "tipo" é true (Fono) ou false (Paciente)
+                        Boolean isFono = documentSnapshot.getBoolean("tipo");
 
-        //Verifica se algum campo está vazio (Empty), se tiver vai mostrar uma mensagem curta (Toast)
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)) {
-            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
+                        // Se o campo não existir, 'isFono' será null, então tratamos como paciente por segurança.
+                        if (isFono != null && isFono) {
+                            // Se for Fonoaudiólogo (tipo == true)
+                            // ABRE A TELA DO MENU NOVO
+                            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                            startActivity(intent);
+                        } else {
+                            // Se for Paciente (tipo == false ou o campo não existe)
+                            // ABRE A TELA ANTIGA DO PACIENTE
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        finish(); // Fecha a tela de login para o usuário não voltar para ela
 
-        //Criação de um usuário no Firebase enviando os dados pra la, o SuccessListener é executado se deu crt.
-        auth.createUserWithEmailAndPassword(email, senha)
-                .addOnSuccessListener(r -> {
-                    Toast.makeText(this, "Registrado com sucesso!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, MainActivity.class));
-                    finish();
+                    } else {
+                        // Caso raro: usuário existe no Auth mas não no Firestore
+                        Toast.makeText(LoginActivity.this, "Erro: Dados do usuário não encontrados.", Toast.LENGTH_SHORT).show();
+                        mAuth.signOut(); // Desloga o usuário para evitar problemas
+                        btnLogin.setEnabled(true);
+                    }
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show());
-
-
+                .addOnFailureListener(e -> {
+                    // Se a busca no banco falhar
+                    Toast.makeText(LoginActivity.this, "Erro ao buscar dados: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    mAuth.signOut();
+                    btnLogin.setEnabled(true);
+                });
     }
 }
