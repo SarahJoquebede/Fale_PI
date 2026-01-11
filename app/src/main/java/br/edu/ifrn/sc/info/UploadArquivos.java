@@ -41,6 +41,8 @@ public class UploadArquivos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_arquivos);
 
+
+
         firebaseUtils = new FirebaseUtils();
 
         // 1. Tenta recuperar o ID do tema vindo da tela anterior
