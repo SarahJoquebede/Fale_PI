@@ -16,6 +16,7 @@
         <include layout="@layout/activity_cabecalho_model" />
 
         <TextView
+            android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="140dp"
@@ -55,8 +56,9 @@
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="396dp"
-            app:icon="@drawable/icon_upload"
             android:contentDescription="@string/botao"
+            android:visibility="invisible"
+            app:icon="@drawable/icon_upload"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="#403C3C" />
@@ -65,8 +67,8 @@
             android:id="@+id/status_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="436dp"
-            android:layout_marginEnd="196dp"
+            android:layout_marginTop="452dp"
+            android:layout_marginEnd="200dp"
             android:text="Nenhuma imagem selecionada."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -77,8 +79,9 @@
             android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="316dp"
-            android:textColorLink="#A24545"
             android:contentDescription="@string/botao"
+            android:textColorLink="#A24545"
+            android:visibility="invisible"
             app:icon="@drawable/microfone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -107,12 +110,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
             android:fontFamily="@font/lilita_oone"
             android:text="Itens Adicionados:"
             android:textStyle="bold"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="198dp"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp" />
 
         <LinearLayout
             android:id="@+id/layout_items_list"
@@ -132,6 +136,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/blocos_preto" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="40dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="352dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/status_audio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_record_audio"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="352dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_select_image"
+            app:layout_constraintTop_toBottomOf="@+id/status_audio"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
