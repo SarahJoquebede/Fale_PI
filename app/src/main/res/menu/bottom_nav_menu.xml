@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/nav_profissional_fragment"
         android:icon="@drawable/home_img"
         android:title="Início" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/nav_blocos_activity"
         android:icon="@drawable/blocos_img"
-        android:title="Dashboard" />
+        android:title="Criação de atividades" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/nav_lista_pacientes"
         android:icon="@drawable/lista_img"
-        android:title="Notificações" />
+        android:title="Lista de pacientes" />
 
 </menu>
 

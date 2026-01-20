@@ -20,10 +20,9 @@ public class MenuActivity extends AppCompatActivity {
 
         // Encontra o container onde as telas (fragments) serão carregadas
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.navigation_home);
+                .findFragmentById(R.id.nav_host_fragment);
 
         // Pega o "cérebro" da navegação de dentro do container
-        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
 
         // Conecta o menu ao controlador para que a navegação seja automática
