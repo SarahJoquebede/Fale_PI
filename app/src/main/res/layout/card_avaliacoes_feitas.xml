@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Versão de teste ultra-simples -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/card_background"
-    android:gravity="center_horizontal">
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:background="#E0E0E0">
 
     <TextView
-        android:id="@+id/card_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Avaliações Feitas"
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="8dp"/>
+        android:text="Teste Card Avaliacoes" />
 
-    <TextView
-        android:id="@+id/card_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="36sp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"/>
 </LinearLayout>
