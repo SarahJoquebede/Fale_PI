@@ -31,10 +31,11 @@ public class ListAudioActivity extends AppCompatActivity{
         RecyclerView rvAudios = findViewById(R.id.rvAudios);
         rvAudios.setLayoutManager(new LinearLayoutManager(this));
 
+        //Inicializa o db
         db = FirebaseFirestore.getInstance();
+        //Pega as infos do user
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-     //   loadAudios();
 
         adapter = new AudioAdapter(audioList, item -> {
             Intent i = new Intent(this, ReviewActivity.class);

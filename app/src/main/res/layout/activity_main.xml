@@ -13,24 +13,25 @@
         android:id="@+id/include"
         layout="@layout/activity_cabecalho_model" />
 
+
     <TextView
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="56dp"
         android:text="@string/toque_em_gravar"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.215"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
         tools:ignore="MissingConstraints" />
-
 
     <Button
         android:id="@+id/btnStop"
         android:layout_width="165dp"
         android:layout_height="48dp"
-        android:layout_marginTop="524dp"
+        android:layout_marginTop="576dp"
         android:enabled="false"
         android:text="⏹️ Parar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,11 +43,12 @@
         android:id="@+id/btnList"
         android:layout_width="166dp"
         android:layout_height="48dp"
-        android:layout_marginTop="564dp"
+        android:layout_marginTop="616dp"
+        android:contentDescription="@string/listar"
         android:enabled="true"
         android:text="@string/listar"
-        android:contentDescription="@string/listar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -59,16 +61,16 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints" />
 
+
     <ImageView
         android:id="@+id/imgAtividade"
         android:layout_width="251dp"
         android:layout_height="257dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="128dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -93,15 +95,15 @@
         android:layout_height="72dp"
         android:layout_marginStart="80dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/botao"
         android:src="@drawable/microfone"
         android:text="🎙️ "
-        android:contentDescription="@string/botao"
         android:visibility="visible"
         app:icon="@drawable/microfone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685"
+        app:layout_constraintVertical_bias="0.71"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -110,15 +112,36 @@
         android:layout_height="79dp"
         android:layout_marginEnd="80dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/listar"
         android:src="@drawable/btnouvir"
         android:text="🔊 Ouvir áudio"
-        android:contentDescription="@string/listar"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.682"
+        app:layout_constraintVertical_bias="0.717"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tx_palavra"
+        android:layout_width="56dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="368dp"
+        android:text="Teste"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tx_silabica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

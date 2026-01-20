@@ -13,7 +13,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_blocos);
 
         // Encontra o componente visual do menu inferior no layout pelo seu ID correto
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);

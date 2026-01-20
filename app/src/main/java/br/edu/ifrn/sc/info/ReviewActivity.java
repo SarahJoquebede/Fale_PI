@@ -26,11 +26,13 @@ public class ReviewActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        //Achou o botao
         Button btnPlay = findViewById(R.id.btnPlay);
         Button btnSalvar = findViewById(R.id.btnSalvar);
         sbNota = findViewById(R.id.sbNota);
         etComentario = findViewById(R.id.etComentario);
 
+        //Pegando as infos da tela anterior
         audioUrl = getIntent().getStringExtra("audioUrl");
         audioId = getIntent().getStringExtra("audioId");
 

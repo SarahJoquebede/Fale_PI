@@ -120,6 +120,20 @@ public class UploadArquivos extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Toast.makeText(UploadArquivos.this, "Atividade salva com sucesso!", Toast.LENGTH_SHORT).show();
+
+                //Mandando para o PACIENTE
+                Intent intent = new Intent(UploadArquivos.this, MainActivity.class);
+
+                // Passando os dados capturados nos EditTexts
+                intent.putExtra("palavra_chave", palavra);
+                intent.putExtra("silabica_chave", silabica);
+
+                // Passando os endereços dos arquivos (convertidos para String)
+                if (mImageUri != null) intent.putExtra("image_uri", mImageUri.toString());
+                if (mAudioUri != null) intent.putExtra("audio_uri", mAudioUri.toString());
+
+                Toast.makeText(UploadArquivos.this, "AAA", Toast.LENGTH_SHORT).show();
+                //startActivity(intent);
                 resetForm();
             }
 
