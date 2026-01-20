@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtSenha;
@@ -33,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.etSenha);
         btnLogin = findViewById(R.id.btnLogin);
 
+        edtEmail.setText("fono@email.com");
+        edtSenha.setText("fono123");
+
         // 3. Configura o clique do botão de login
         btnLogin.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
@@ -53,9 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, senha)
                 .addOnSuccessListener(authResult -> {
                     // Se o login for bem-sucedido, pega o ID do usuário
-                    String uid = authResult.getUser().getUid();
+                    String uid = Objects.requireNonNull(authResult.getUser()).getUid();
                     // Chama a função que vai verificar o tipo de usuário
                     verificarTipoUsuario(uid);
+
                 })
                 .addOnFailureListener(e -> {
                     // Se o login falhar, exibe uma mensagem de erro

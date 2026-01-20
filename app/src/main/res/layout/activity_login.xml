@@ -18,13 +18,13 @@
         android:id="@+id/etEmail"
         android:layout_width="344dp"
         android:layout_height="51dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="272dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/lilita_oone"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:textColorLink="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
@@ -87,15 +87,14 @@
     <TextView
         android:id="@+id/tvLogin"
 
-        android:layout_width="349dp"
-        android:layout_height="185dp"
+        android:layout_width="348dp"
+        android:layout_height="102dp"
         android:layout_marginTop="136dp"
         android:background="#00F6F6F6"
         android:fontFamily="@font/lilita_oone"
         android:text="Olá, pequeno(a) explorador(a)!"
         android:textColor="#FFFFFF"
         android:textSize="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
