@@ -48,7 +48,7 @@
                 android:layout_height="24dp"
                 android:background="#3B4BD7"
                 android:contentDescription="Sino de notificação"
-                android:src="@android:drawable/ic_dialog_email" />
+                android:src="@drawable/ic_email_dialog" />
 
             <TextView
                 android:layout_width="wrap_content"
