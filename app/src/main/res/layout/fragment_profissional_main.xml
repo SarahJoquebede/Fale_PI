@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#D1C4E9"> <!-- Uma cor de fundo para sabermos que ele carregou -->
-
+<!--aaaa
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
