@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // 2. Conecta os componentes do XML com o Java
-        edtEmail = findViewById(R.id.edtEmail);
-        edtSenha = findViewById(R.id.edtSenha);
+        edtEmail = findViewById(R.id.etEmail);
+        edtSenha = findViewById(R.id.etSenha);
         btnLogin = findViewById(R.id.btnLogin);
 
         // 3. Configura o clique do botão de login

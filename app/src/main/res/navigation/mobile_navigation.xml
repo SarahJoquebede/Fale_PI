@@ -3,11 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_host_fragment">
 
+    <!-- Tela de Início (Home) - Assumindo que você terá um Fragment para ela -->
     <fragment
         android:id="@+id/navigation_home"
+        android:name="br.edu.ifrn.sc.info.ProfissionalMainFragment"
         android:label="Início"
+        tools:layout="@layout/fragment_profissional_main" />
 
+    <!-- Destino para a Tela de Blocos (Activity) -->
+    <activity
+        android:id="@+id/naviation_dashboard"
+        android:name="br.edu.ifrn.sc.info.BlocosActivity"
+        android:label="Atividades"
+        tools:layout="@layout/activity_blocos" />
 
+    <!-- Destino para a Lista de Pacientes (Activity) -->
+    <activity
         android:id="@+id/navigation_notifications"
+        android:name="br.edu.ifrn.sc.info.ListaPacienteActivity"
+        android:label="Pacientes"
+        tools:layout="@layout/activity_listapacientes" />
+
 </navigation>
