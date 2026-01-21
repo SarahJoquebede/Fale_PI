@@ -7,19 +7,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.edu.ifrn.sc.info.R;
-
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
-    private EditText edtNome, edtEmail, edtSenha, edtDataNasc;
+    private EditText etdNome, etdEmail, etdSenha, etdIdade;
     private Button btnCadastrar;
 
     private FirebaseAuth mAuth;
@@ -30,65 +27,75 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_paciente);
 
+        // 1. Inicializa o Firebase Auth e Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        edtNome = findViewById(R.id.edtNome);
-        edtEmail = findViewById(R.id.edtEmail);
-        edtSenha = findViewById(R.id.edtSenha);
-        edtDataNasc = findViewById(R.id.edtDataNascimento);
+        // 2. Conecta as views do layout
+        etdNome = findViewById(R.id.etdNome);
+        etdEmail = findViewById(R.id.edtEmail);
+        etdSenha = findViewById(R.id.edtSenha);
+        etdIdade = findViewById(R.id.edtIdade);
         btnCadastrar = findViewById(R.id.btnCadastrar);
 
-        btnCadastrar.setOnClickListener(v -> cadastrarNoSistema());
+        // 3. Configura o clique do botão
+        btnCadastrar.setOnClickListener(v -> {
+            // Pega os dados dos campos de texto
+            String nome = etdNome.getText().toString().trim();
+            String email = etdEmail.getText().toString().trim();
+            String senha = etdSenha.getText().toString().trim();
+            String idade = etdIdade.getText().toString().trim();
+
+            // Validação simples (pode ser melhorada)
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || idade.isEmpty()) {
+                Toast.makeText(this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Chama a função para registrar o usuário
+            registrarUsuario(nome, email, senha, idade);
+        });
     }
 
-    private void cadastrarNoSistema() {
-        String nome = edtNome.getText().toString().trim();
-        String email = edtEmail.getText().toString().trim();
-        String senha = edtSenha.getText().toString().trim();
-        String dataNasc = edtDataNasc.getText().toString().trim();
-
-        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Preencha os campos obrigatórios!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        btnCadastrar.setEnabled(false);
-
-        // 1. Criar o acesso no Firebase Authentication
+    private void registrarUsuario(String nome, String email, String senha, String idade) {
+        // Passo A: Cria o usuário no Firebase Authentication (para login com e-mail/senha)
         mAuth.createUserWithEmailAndPassword(email, senha)
-                .addOnSuccessListener(authResult -> {
-                    String uid = authResult.getUser().getUid();
-                    salvarEmAmbasColecoes(uid, nome, email, dataNasc);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    btnCadastrar.setEnabled(true);
+                .addOnCompleteListener(this, taskAuth -> {
+                    if (taskAuth.isSuccessful()) {
+                        // Se o usuário foi criado no Authentication com sucesso...
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        String uid = firebaseUser.getUid();
+
+                        // Passo B: Salva as informações adicionais no Firestore
+                        salvarDadosDoPaciente(uid, nome, email, idade);
+                    } else {
+                        // Se a criação no Authentication falhou (ex: e-mail já existe, senha fraca)
+                        Toast.makeText(CadastrarPacienteActivity.this, "Falha ao criar usuário: " + taskAuth.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 });
     }
 
-    private void salvarEmAmbasColecoes(String uid, String nome, String email, String dataNasc) {
-        // Preparar os dados
-        Map<String, Object> dados = new HashMap<>();
-        dados.put("id", uid);
-        dados.put("nome", nome);
-        dados.put("email", email);
-        dados.put("dataNasc", dataNasc);
-        dados.put("tipo", false); // Indica que é um paciente
+    private void salvarDadosDoPaciente(String uid, String nome, String email, String idade) {
+        // Cria um objeto Map para guardar os dados
+        Map<String, Object> pacienteData = new HashMap<>();
+        pacienteData.put("nome", nome);
+        pacienteData.put("email", email);
+        pacienteData.put("idade", idade);
 
-        // 2. Criar as tarefas de salvamento para as DUAS coleções ao mesmo tempo
-        Task<Void> taskUsuarios = db.collection("usuarios").document(uid).set(dados);
-        Task<Void> taskPacientes = db.collection("pacientes").document(uid).set(dados);
+        // CORREÇÃO 1: ADICIONA O CAMPO 'tipo' PARA O LOGIN FUNCIONAR
+        pacienteData.put("tipo", false); // Essencial para identificar como paciente
 
-        // 3. Esperar que AMBAS terminem com sucesso
-        Tasks.whenAll(taskUsuarios, taskPacientes)
+        // CORREÇÃO 2: SALVA NA COLEÇÃO "pacientes"
+        // Esta linha vai criar a coleção "pacientes" na primeira vez que for executada.
+        db.collection("pacientes").document(uid).set(pacienteData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Paciente cadastrado em ambas coleções!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    // Se os dados foram salvos no Firestore com sucesso...
+                    Toast.makeText(CadastrarPacienteActivity.this, "Paciente cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish(); // Fecha a tela de cadastro e volta para a anterior
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erro ao sincronizar bancos: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    btnCadastrar.setEnabled(true);
+                    // Se falhou ao salvar no Firestore (ex: problema de permissão)
+                    Toast.makeText(CadastrarPacienteActivity.this, "Erro ao salvar dados do paciente: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 }

@@ -30,26 +30,28 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
+
         <EditText
-            android:id="@+id/edtNome"
+            android:id="@+id/etdNome"
             android:layout_width="372dp"
             android:layout_height="48dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="56dp"
             android:hint="Nome"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.41"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/edtDataNascimento"
+            android:id="@+id/edtIdade"
             android:layout_width="372dp"
             android:layout_height="48dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:hint="Data de nascimento"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28dp"
+            android:hint="Idade"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtNome"
+            app:layout_constraintTop_toBottomOf="@+id/edtSenha"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -57,31 +59,31 @@
             android:layout_width="372dp"
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
             android:hint="Tipo de sessão"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtSenha"
+            app:layout_constraintTop_toBottomOf="@+id/edtIdade"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
-
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="372dp"
             android:layout_height="48dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="21dp"
             android:hint="Email (login)"
             android:inputType="textEmailAddress"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtDataNascimento"
+            app:layout_constraintTop_toBottomOf="@+id/etdNome"
             tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="372dp"
             android:layout_height="48dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
             android:hint="Senha"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,7 @@
 
         <Button
             android:id="@+id/btnCadastrar"
+            android:contentDescription="cadastrar"
             android:layout_width="136dp"
             android:layout_height="48dp"
             android:layout_marginTop="84dp"
@@ -106,12 +109,13 @@
             android:layout_marginEnd="9dp"
             android:layout_marginBottom="62dp"
             app:tint="#313133"
-            app:layout_constraintBottom_toTopOf="@+id/edtNome"
+            app:layout_constraintBottom_toTopOf="@+id/etdNome"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:srcCompat="@drawable/lista_img" />
 
         <ImageButton
             android:id="@+id/ibtnExcluir"
+            android:contentDescription="excluir"
             android:layout_width="46dp"
             android:layout_height="48dp"
             android:layout_marginTop="80dp"
@@ -125,6 +129,7 @@
 
         <ImageButton
             android:id="@+id/ibtnAtualizar"
+            android:contentDescription="atualizar"
             android:layout_width="53dp"
             android:layout_height="47dp"
             android:layout_marginTop="568dp"

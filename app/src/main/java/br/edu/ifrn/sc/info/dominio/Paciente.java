@@ -7,6 +7,7 @@ public class Paciente extends Usuario{
     private String nome;
     private String email;
     private String senha;
+    private int idade;
 
 
 
@@ -14,10 +15,11 @@ public class Paciente extends Usuario{
     }
 
     // Construtor para a Lista (usado na ListaPacientesActivity)
-    public Paciente(String id, String nome, String email) {
+    public Paciente(String id, String nome, String email, int idade) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.idade = idade;
     }
 
 
@@ -28,6 +30,12 @@ public class Paciente extends Usuario{
         this.senha = senha;
     }
 
+    public void setIdade(int idade){
+        this.idade = idade;
+    }
+    public int getIdade(){
+        return idade;
+    }
 
     public String getId() {
         return id;

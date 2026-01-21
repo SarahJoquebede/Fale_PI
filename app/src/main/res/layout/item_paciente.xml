@@ -1,30 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 1. CardView como Componente Raiz -->
+<!-- O CardView já nos dá as bordas arredondadas, a sombra (elevação) e a aparência de "card". -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="4dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <LinearLayout
+    <!-- 2. ConstraintLayout para Organizar o Conteúdo Interno -->
+    <!-- Usamos 'wrap_content' para a altura, para que o card se ajuste ao seu conteúdo. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
+
+        <!-- Ícone do Paciente (Avatar) -->
+
+        <!-- Nome do Paciente -->
+
+        <!-- E-mail ou outra informação do Paciente -->
 
         <TextView
             android:id="@+id/tvNomePaciente"
-            android:layout_width="341dp"
+            android:layout_width="0dp"
+
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="196dp"
+            android:fontFamily="@font/lilita_oone"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nome" />
 
         <TextView
-            android:id="@+id/tvEmailPaciente"
-            android:layout_width="338dp"
+            android:id="@+id/tvIdade2"
+            android:fontFamily="@font/lilita_oone"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvNomePaciente"
+            app:layout_constraintTop_toBottomOf="@id/tvNomePaciente"
+            tools:text="idade" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="71dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/perfil" />
+
+        <ImageButton
+            android:id="@+id/ibExcluir"
+            android:contentDescription="Avaliar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.871"
+            app:layout_constraintStart_toEndOf="@+id/tvNomePaciente"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+        <ImageButton
+            android:id="@+id/ibAvaliar"
+            android:contentDescription="excluir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="68dp"
+            android:backgroundTint="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/ibExcluir"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="?attr/actionModePasteDrawable"
+            app:tint="#5F5B5B" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
