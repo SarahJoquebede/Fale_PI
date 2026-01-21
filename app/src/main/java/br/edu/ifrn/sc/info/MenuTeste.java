@@ -26,6 +26,8 @@ public class MenuTeste extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         biding = ActivityTesteMenuBinding.inflate(getLayoutInflater());
         setContentView(biding.getRoot());
+        replaceFragment(new HomeTeste());
+
         biding.bottomNavigationView2.setOnItemSelectedListener(item -> {
 
 

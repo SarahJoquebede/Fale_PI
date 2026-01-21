@@ -61,6 +61,10 @@
             android:name=".ReviewActivity"
             android:exported="false"
             android:label="@string/title_activity_review" />
+        <activity android:name=".MenuTeste"
+            android:exported="false"
+            android:label="MenuTeste"
+            />
     </application>
 
 </manifest>

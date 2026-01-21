@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+import br.edu.ifrn.sc.info.databinding.ActivityTesteMenuBinding;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtSenha;
