@@ -2,4 +2,5 @@
 <resources>
     <item name="cv_pendentes_detalhes" type="id" />
     <item name="rvPendentes" type="id"/>
+    <item name="frame_layout" type="id">frame_layout</item>
 </resources>

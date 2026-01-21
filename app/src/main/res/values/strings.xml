@@ -61,4 +61,6 @@
     </string>
     <string name="toque_em_gravar">Toque em Gravar</string>
     <string name="listar">Listar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

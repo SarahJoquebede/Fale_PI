@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (isFono != null && isFono) {
                             // Se for Fonoaudiólogo (tipo == true)
                             // ABRE A TELA DO MENU NOVO
-                            Intent intent = new Intent(LoginActivity.this, BlocosActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MenuTeste.class);
                             startActivity(intent);
                         } else {
                             // Se for Paciente (tipo == false ou o campo não existe)
