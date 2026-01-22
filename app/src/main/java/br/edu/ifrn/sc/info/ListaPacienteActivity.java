@@ -1,5 +1,6 @@
 package br.edu.ifrn.sc.info;
 
+import android.content.Intent;
 import android.os.Bundle;import android.view.View;
 import android.widget.ProgressBar; // Para feedback visual de carregamento
 import android.widget.Toast;
@@ -11,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+
 
 import br.edu.ifrn.sc.info.dominio.Paciente;
 
@@ -26,7 +31,9 @@ public class ListaPacienteActivity extends AppCompatActivity {
     private PacienteAdapter pacienteAdapter;
     private List<Paciente> listaDePacientes;
     private FirebaseFirestore db;
-    private ProgressBar progressBar; // Opcional, mas recomendado
+    private ProgressBar progressBar;
+    private FloatingActionButton fabAddPaciente;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,8 @@ public class ListaPacienteActivity extends AppCompatActivity {
         // 1. Inicializa os componentes
         rvPacientes = findViewById(R.id.rvPacientes); // Garanta que este ID está no seu XML
         progressBar = findViewById(R.id.progressBar); // Garanta que este ID está no seu XML
+        fabAddPaciente = findViewById(R.id.fabAddPaciente);
+
 
         // 2. Configura o RecyclerView
         rvPacientes.setHasFixedSize(true);
@@ -49,9 +58,18 @@ public class ListaPacienteActivity extends AppCompatActivity {
         pacienteAdapter = new PacienteAdapter(listaDePacientes, this);
         rvPacientes.setAdapter(pacienteAdapter);
 
+
         // 5. Chama a função para buscar os dados
         carregarPacientesDoFirestore();
+
+        fabAddPaciente.setOnClickListener(v -> {
+            Intent intent = new Intent(ListaPacienteActivity.this, CadastrarPacienteActivity.class);
+            startActivity(intent);
+        });
+
+
     }
+
 
     private void carregarPacientesDoFirestore() {
         // Mostra a barra de progresso enquanto os dados são carregados

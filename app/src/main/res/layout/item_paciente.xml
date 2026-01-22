@@ -32,36 +32,42 @@
 
         <TextView
             android:id="@+id/tvNomePaciente"
-            android:layout_width="0dp"
+            android:layout_width="219dp"
 
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="196dp"
+            android:layout_height="18dp"
             android:fontFamily="@font/lilita_oone"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.789"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.17"
             tools:text="Nome" />
 
         <TextView
             android:id="@+id/tvIdade2"
+            android:layout_width="229dp"
+            android:layout_height="22dp"
             android:fontFamily="@font/lilita_oone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvNomePaciente"
+            app:layout_constraintHorizontal_bias="0.855"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNomePaciente"
+            app:layout_constraintVertical_bias="0.588"
             tools:text="idade" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="71dp"
             android:layout_height="65dp"
-            android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.047"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -69,11 +75,11 @@
 
         <ImageButton
             android:id="@+id/ibExcluir"
-            android:contentDescription="Avaliar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="Avaliar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.871"
             app:layout_constraintStart_toEndOf="@+id/tvNomePaciente"
@@ -82,14 +88,17 @@
 
         <ImageButton
             android:id="@+id/ibAvaliar"
-            android:contentDescription="excluir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="68dp"
             android:backgroundTint="#00FFFFFF"
+            android:contentDescription="excluir"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/ibExcluir"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.363"
             app:srcCompat="?attr/actionModePasteDrawable"
             app:tint="#5F5B5B" />
 

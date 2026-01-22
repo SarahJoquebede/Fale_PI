@@ -1,41 +1,27 @@
 package br.edu.ifrn.sc.info.dominio;
 
-import com.google.firebase.firestore.Exclude;
 
-public class Paciente extends Usuario{
-    private String id; // Alterado para String para ser compatível com IDs do Firestore
+public class Paciente  {
+
+    private String id;
     private String nome;
     private String email;
-    private String senha;
-    private int idade;
-
+    private String idade; // <<-- MUDADO PARA STRING, COMO VOCÊ PEDIU
+    private boolean tipo; // Para diferenciar paciente de fono
 
 
     public Paciente() {
     }
 
-    // Construtor para a Lista (usado na ListaPacientesActivity)
-    public Paciente(String id, String nome, String email, int idade) {
+
+    public Paciente(String id, String nome, String email, String idade) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.idade = idade;
+        this.tipo = false; // Pacientes sempre terão o tipo false
     }
 
-
-    public Paciente(String id, String nome, String email, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public void setIdade(int idade){
-        this.idade = idade;
-    }
-    public int getIdade(){
-        return idade;
-    }
 
     public String getId() {
         return id;
@@ -61,13 +47,19 @@ public class Paciente extends Usuario{
         this.email = email;
     }
 
-    // @Exclude impede que a senha seja baixada ou exibida por acidente em listas
-    @Exclude
-    public String getSenha() {
-        return senha;
+    public String getIdade() {
+        return idade;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setIdade(String idade) {
+        this.idade = idade;
+    }
+
+    public boolean isTipo() {
+        return tipo;
+    }
+
+    public void setTipo(boolean tipo) {
+        this.tipo = tipo;
     }
 }

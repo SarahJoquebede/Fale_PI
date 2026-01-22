@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,9 +20,7 @@ import java.util.List;
 
 import br.edu.ifrn.sc.info.dominio.Paciente;
 
-// OBSERVAÇÃO: Se a classe Paciente e CadastrarPacienteActivity
-// estão nesta mesma pasta (br.edu.ifrn.sc.info),
-// você NÃO deve fazer o import delas. O Java já as reconhece.
+
 
 public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHolder> {
 
@@ -49,14 +48,6 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
 
         holder.tvNome.setText(paciente.getNome());
         holder.tvIdade.setText(paciente.getIdade());
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, CadastrarPacienteActivity.class);
-            intent.putExtra("idPaciente", paciente.getId());
-            context.startActivity(intent);
-        });
-
-        // --- NOVO: LÓGICA PARA O BOTÃO DE AVALIAR ---
         holder.ibAvaliar.setOnClickListener(v -> {
             // 1. Cria a Intent para a tela de áudios
             Intent intent = new Intent(context, ListAudioActivity.class);
@@ -67,7 +58,20 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
 
             // 3. Inicia a ActivityListAudios
             context.startActivity(intent);
-        });
+                    // --- NOVO: LÓGICA DA COR ZEBRADA ---
+                    if (position % 2 == 0) {
+                        // Se a posição for PAR (0, 2, 4...), usa a cor para itens pares
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white
+                        ));
+                    } else {
+                        // Se a posição for ÍMPAR (1, 3, 5...), usa a cor para itens ímpares
+                        holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.azul_claro));
+                    }
+
+
+                    });
+
+
         holder.ibExcluir.setOnClickListener(v -> {
             // Mostra um diálogo de confirmação antes de excluir
             new AlertDialog.Builder(context)

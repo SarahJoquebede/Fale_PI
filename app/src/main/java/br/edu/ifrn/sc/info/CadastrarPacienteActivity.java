@@ -85,8 +85,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         // CORREÇÃO 1: ADICIONA O CAMPO 'tipo' PARA O LOGIN FUNCIONAR
         pacienteData.put("tipo", false); // Essencial para identificar como paciente
 
-        // CORREÇÃO 2: SALVA NA COLEÇÃO "pacientes"
-        // Esta linha vai criar a coleção "pacientes" na primeira vez que for executada.
+
         db.collection("pacientes").document(uid).set(pacienteData)
                 .addOnSuccessListener(aVoid -> {
                     // Se os dados foram salvos no Firestore com sucesso...
