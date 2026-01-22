@@ -5,10 +5,13 @@
     <item android:title="Home"
         android:icon="@drawable/home_menu"
         android:id="@+id/nav_inicio"/>
+
     <item android:title="Dashboard"
         android:icon="@drawable/blocos_img"
         android:id="@+id/nav_atividade"/>
+
     <item android:title="Meus pacientes"
         android:icon="@drawable/lista_img"
         android:id="@+id/nav_meus_pacientes"/>
+
 </menu>
