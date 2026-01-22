@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,10 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 import br.edu.ifrn.sc.info.dominio.Paciente;
-
-// OBSERVAÇÃO: Se a classe Paciente e CadastrarPacienteActivity
-// estão nesta mesma pasta (br.edu.ifrn.sc.info),
-// você NÃO deve fazer o import delas. O Java já as reconhece.
 
 public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHolder> {
 
@@ -36,8 +33,7 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_paciente, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_paciente, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,60 +46,56 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.ViewHo
         holder.tvNome.setText(paciente.getNome());
         holder.tvIdade.setText(paciente.getIdade());
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, CadastrarPacienteActivity.class);
-            intent.putExtra("idPaciente", paciente.getId());
-            context.startActivity(intent);
-        });
 
-        // --- NOVO: LÓGICA PARA O BOTÃO DE AVALIAR ---
+
+            // No PacienteAdapter.java, dentro do onBindViewHolder
+            holder.itemView.setOnClickListener(v -> {
+                if (paciente.getId() != null) {
+                    Intent intent = new Intent(context, MenuTeste.class);
+                    intent.putExtra("PACIENTE_ID", paciente.getId());
+                    intent.putExtra("PACIENTE_NOME", paciente.getNome());
+
+                    // Esta flag é essencial para que o Android não crie outra MenuTeste por cima da atual
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    context.startActivity(intent);
+                }
+            });
+
+        // Clique no botão de avaliar (se mantiver a lógica antiga)
         holder.ibAvaliar.setOnClickListener(v -> {
-            // 1. Cria a Intent para a tela de áudios
             Intent intent = new Intent(context, ListAudioActivity.class);
-
-            // 2. Passa o ID e o Nome do paciente clicado para a próxima tela
             intent.putExtra("PACIENTE_ID", paciente.getId());
-            intent.putExtra("PACIENTE_NOME", paciente.getNome());
-
-            // 3. Inicia a ActivityListAudios
             context.startActivity(intent);
         });
+
+        // Cor zebrada
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.azul_claro));
+        }
+
+        // Clique no botão de excluir
         holder.ibExcluir.setOnClickListener(v -> {
-            // Mostra um diálogo de confirmação antes de excluir
             new AlertDialog.Builder(context)
-                    .setTitle("Confirmar Exclusão")
-                    .setMessage("Tem certeza que deseja excluir o paciente " + paciente.getNome() + "?")
-                    .setPositiveButton("Sim, Excluir", (dialog, which) -> {
-                        // Se o usuário clicar "Sim", chama a função para deletar
-                        excluirPaciente(paciente, position);
-                    })
-                    .setNegativeButton("Não", null) // "Não" não faz nada
+                    .setTitle("Excluir")
+                    .setMessage("Deseja excluir " + paciente.getNome() + "?")
+                    .setPositiveButton("Sim", (dialog, which) -> excluirPaciente(paciente, position))
+                    .setNegativeButton("Não", null)
                     .show();
         });
-
     }
 
-    // --- NOVO: FUNÇÃO PARA EXCLUIR O PACIENTE ---
     private void excluirPaciente(Paciente paciente, int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Deleta o documento do paciente da coleção "usuarios" (ou "pacientes")
-        // IMPORTANTE: Ajuste "usuarios" para o nome correto da sua coleção de usuários/pacientes
         db.collection("pacientes").document(paciente.getId())
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    // Se a exclusão no Firestore funcionar:
-                    // 1. Remove o paciente da lista local
                     lista.remove(position);
-                    // 2. Notifica o RecyclerView que um item foi removido naquela posição
                     notifyItemRemoved(position);
-                    // 3. (Opcional) Atualiza as posições dos itens restantes
                     notifyItemRangeChanged(position, lista.size());
-                    Toast.makeText(context, "Paciente excluído com sucesso", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    // Se a exclusão no Firestore falhar:
-                    Toast.makeText(context, "Erro ao excluir o paciente: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Excluído!", Toast.LENGTH_SHORT).show();
                 });
     }
 

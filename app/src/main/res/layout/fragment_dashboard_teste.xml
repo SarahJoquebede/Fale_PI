@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DashboardTeste"
-    android:background="@color/teal_200">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include
+        android:id="@+id/cabecalho"
+        layout="@layout/activity_cabecalho_model"/>
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Area de atividades"
-        android:textSize="30dp"/>
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-</FrameLayout>
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/lilita_oone"
+        android:text="Blocos de atividades"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdicionarAtividade"
+        android:layout_width="378dp"
+        android:layout_height="121dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginBottom="277dp"
+        android:backgroundTint="#7AD00C0C"
+        android:fontFamily="@font/lilita_oone"
+        android:text="Adicionar nova atividade"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnviar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+        app:layout_constraintVertical_bias="0.059" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/txtTitulo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blocos_preto"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnEnviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="588dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#7AD00C0C"
+        android:text="Enviar "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

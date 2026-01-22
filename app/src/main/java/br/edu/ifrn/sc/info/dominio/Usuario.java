@@ -10,35 +10,46 @@ public class Usuario {
     private int cpf;
     private boolean tipo; //Profissional = true, Paciente = false
     private String id;
+    private String idade;
 
     public Usuario() {
 
     }
 
-    public Usuario(String nome, String email, String senha, Date dataNasc, int cpf, boolean tipo, String id) {
+    public Usuario(String nome, String email, String senha, Date dataNasc, int cpf, boolean tipo, String id, String idade) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.tipo = tipo;
+        this.idade = idade;
     }
     public String getId() {
         return id;
     }
     public void setId(String id) {
+
         this.id = id;
     }
-
+    public void setIdade(String idade){
+        this.idade = idade;
+    }
+ public String getIdade(){
+        return idade;
+ }
     public String getNome() {
+
         return nome;
     }
 
     public void setNome(String nome) {
+
         this.nome = nome;
     }
 
     public String getEmail() {
+
         return email;
     }
 
@@ -47,34 +58,42 @@ public class Usuario {
     }
 
     public String getSenha() {
+
         return senha;
     }
 
     public void setSenha(String senha) {
+
         this.senha = senha;
     }
 
     public Date getDataNasc() {
+
         return dataNasc;
     }
 
     public void setDataNasc(Date dataNasc) {
+
         this.dataNasc = dataNasc;
     }
 
     public int getCpf() {
+
         return cpf;
     }
 
     public void setCpf(int cpf) {
+
         this.cpf = cpf;
     }
 
     public boolean isTipo() {
+
         return tipo;
     }
 
     public void setTipo(boolean tipo) {
+
         this.tipo = tipo;
     }
 }

@@ -14,6 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import br.edu.ifrn.sc.info.utils.FirebaseUtils;
 
 
@@ -23,8 +30,8 @@ public class UploadArquivos extends AppCompatActivity {
     private static final int PICK_AUDIO_REQUEST = 2;
     private static final int REQUEST_PERMISSION = 3;
 
-    // Variável que identifica a qual tema essa atividade pertence
     private String mThemeId;
+    private String mPacienteId; // Variável para o paciente específico
 
     private Uri mImageUri;
     private Uri mAudioUri;
@@ -41,18 +48,14 @@ public class UploadArquivos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_arquivos);
 
-
-
         firebaseUtils = new FirebaseUtils();
 
-        // 1. Tenta recuperar o ID do tema vindo da tela anterior
+        // Recupera o ID do tema e o ID do paciente vindos do Dashboard
         mThemeId = getIntent().getStringExtra("THEME_ID");
+        mPacienteId = getIntent().getStringExtra("PACIENTE_ID");
 
-        // 2. Lógica de segurança/teste:
         if (mThemeId == null) {
-            // Se for nulo, definimos um ID padrão para que você consiga TESTAR a tela agora
-            mThemeId = "tema_geral_teste";
-            Toast.makeText(this, "Aviso: Usando ID de teste (tema_geral_teste)", Toast.LENGTH_SHORT).show();
+            mThemeId = "animais";
         }
 
         initViews();
@@ -65,13 +68,8 @@ public class UploadArquivos extends AppCompatActivity {
         mImageStatus = findViewById(R.id.status_image);
         mAudioStatus = findViewById(R.id.status_audio);
 
-        // Seleção de Imagem
         findViewById(R.id.btn_select_image).setOnClickListener(v -> selectFile(PICK_IMAGE_REQUEST, "image/*"));
-
-        // Seleção de Áudio com verificação de permissão
         findViewById(R.id.btn_record_audio).setOnClickListener(v -> checkPermissionAndSelectAudio());
-
-        // Botão Final de Envio
         mAddItemButton.setOnClickListener(v -> validateAndUpload());
     }
 
@@ -95,10 +93,10 @@ public class UploadArquivos extends AppCompatActivity {
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == PICK_IMAGE_REQUEST) {
                 mImageUri = data.getData();
-                mImageStatus.setText("Imagem selecionada com sucesso!");
+                mImageStatus.setText("Imagem selecionada!");
             } else if (requestCode == PICK_AUDIO_REQUEST) {
                 mAudioUri = data.getData();
-                mAudioStatus.setText("Áudio selecionado com sucesso!");
+                mAudioStatus.setText("Áudio selecionado!");
             }
         }
     }
@@ -108,50 +106,60 @@ public class UploadArquivos extends AppCompatActivity {
         String silabica = mSilabicaEditText.getText().toString().trim();
 
         if (palavra.isEmpty() || mImageUri == null || mAudioUri == null) {
-            Toast.makeText(this, "Preencha a palavra e selecione os arquivos primeiro.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mAddItemButton.setEnabled(false); // Evita cliques duplos durante o upload
-        Toast.makeText(this, "Fazendo upload... aguarde.", Toast.LENGTH_SHORT).show();
+        mAddItemButton.setEnabled(false);
 
-        // Enviando para o Firebase usando o mThemeId (ID do Tema)
+        mAddItemButton.setEnabled(false);
+        Toast.makeText(this, "Fazendo upload...", Toast.LENGTH_SHORT).show();
+
+        // 1. Faz o upload para a biblioteca geral (FirebaseUtils)
         firebaseUtils.uploadActivityItem(mThemeId, palavra, silabica, mImageUri, mAudioUri, new FirebaseUtils.UploadCallback() {
             @Override
-            public void onSuccess() {
-                Toast.makeText(UploadArquivos.this, "Atividade salva com sucesso!", Toast.LENGTH_SHORT).show();
-
-                //Mandando para o PACIENTE
-                Intent intent = new Intent(UploadArquivos.this, MainActivity.class);
-
-                // Passando os dados capturados nos EditTexts
-                intent.putExtra("palavra_chave", palavra);
-                intent.putExtra("silabica_chave", silabica);
-
-                // Passando os endereços dos arquivos (convertidos para String)
-                if (mImageUri != null) intent.putExtra("image_uri", mImageUri.toString());
-                if (mAudioUri != null) intent.putExtra("audio_uri", mAudioUri.toString());
-
-                Toast.makeText(UploadArquivos.this, "AAA", Toast.LENGTH_SHORT).show();
-                //startActivity(intent);
-                resetForm();
+            public void onSuccess(String imageUrl, String audioUrl) {
+                // Se salvou no Geral, agora verifica se manda para o Paciente
+                if (mPacienteId != null && !mPacienteId.isEmpty()) {
+                    salvarNaPastaDoPaciente(palavra, silabica, imageUrl, audioUrl);
+                } else {
+                    Toast.makeText(UploadArquivos.this, "Salvo na biblioteca geral!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                Toast.makeText(UploadArquivos.this, "Falha: " + errorMessage, Toast.LENGTH_LONG).show();
+                Toast.makeText(UploadArquivos.this, "Erro: " + errorMessage, Toast.LENGTH_LONG).show();
                 mAddItemButton.setEnabled(true);
             }
         });
     }
 
-    private void resetForm() {
-        mPalavraEditText.setText("");
-        mSilabicaEditText.setText("");
-        mImageUri = null;
-        mAudioUri = null;
-        mImageStatus.setText("Nenhuma imagem selecionada.");
-        mAudioStatus.setText("Nenhum áudio selecionado.");
-        mAddItemButton.setEnabled(true);
+    private void salvarNaPastaDoPaciente(String palavra, String silabica, String imageUrl, String audioUrl) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("palavra", palavra);
+        dados.put("silabica", silabica);
+        dados.put("imagemUrl", imageUrl);
+        dados.put("audioUrl", audioUrl);
+
+        // .set(..., SetOptions.merge()) resolve o erro de NOT_FOUND criando as pastas automaticamente
+        db.collection("pacientes")
+                .document(mPacienteId)
+                .collection("blocosRecebidos")
+                .document("plosivizacao_" + mThemeId)
+                .collection("atividades")
+                .document(palavra)
+                .set(dados, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Salvo no Geral e no Paciente!", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao vincular paciente: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
+                });
     }
 }

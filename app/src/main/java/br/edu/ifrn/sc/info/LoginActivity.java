@@ -88,8 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, MenuTeste.class);
                             startActivity(intent);
                         } else {
-                            // Se for Paciente (tipo == false ou o campo não existe)
-                            // ABRE A TELA ANTIGA DO PACIENTE
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }

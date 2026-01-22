@@ -41,9 +41,7 @@
         <activity
             android:name=".UploadArquivos"
             android:exported="false" />
-        <activity
-            android:name=".ListaPacienteActivity"
-            android:exported="false" />
+
         <activity
             android:name=".CadastrarPacienteActivity"
             android:exported="false" />
