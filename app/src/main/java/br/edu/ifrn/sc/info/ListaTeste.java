@@ -1,6 +1,5 @@
 package br.edu.ifrn.sc.info;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,9 +23,7 @@ import java.util.List;
 
 import br.edu.ifrn.sc.info.dominio.Paciente;
 
-
 public class ListaTeste extends Fragment {
-
 
     private RecyclerView rvPacientes;
     private PacienteAdapter pacienteAdapter;
@@ -38,37 +35,31 @@ public class ListaTeste extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_lista_teste, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         rvPacientes = view.findViewById(R.id.rvPacientes);
         progressBar = view.findViewById(R.id.progressBar);
         btnCadastrar = view.findViewById(R.id.fabAddPaciente);
 
         rvPacientes.setHasFixedSize(true);
-        rvPacientes.setLayoutManager(new LinearLayoutManager(getContext())); // Usa getContext() para o contexto do fragmento
+        rvPacientes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         db = FirebaseFirestore.getInstance();
         listaDePacientes = new ArrayList<>();
 
-        // Cria e configura o Adapter que vai popular o RecyclerView
-        pacienteAdapter = new PacienteAdapter(listaDePacientes, getContext()); // Passa o contexto do fragmento
+        // O Adapter agora gerencia o clique para enviar o ID do paciente ao Dashboard
+        pacienteAdapter = new PacienteAdapter(listaDePacientes, getContext());
         rvPacientes.setAdapter(pacienteAdapter);
 
-
         btnCadastrar.setOnClickListener(v -> {
-
-            Intent intent = new Intent(getActivity(), CadastrarPacienteActivity.class); // Usa getActivity() para iniciar uma Activity
+            Intent intent = new Intent(getActivity(), CadastrarPacienteActivity.class);
             startActivity(intent);
         });
-
 
         carregarPacientesDoFirestore();
     }
@@ -88,13 +79,10 @@ public class ListaTeste extends Fragment {
                     if (task.isSuccessful() && task.getResult() != null) {
                         listaDePacientes.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Converte cada documento do Firestore em um objeto Paciente
                             Paciente paciente = document.toObject(Paciente.class);
-                            // Define o ID do documento no objeto, que é crucial para editar/excluir paciente
-                            paciente.setId(document.getId());                      // Adiciona o paciente na lista
+                            paciente.setId(document.getId()); // Crucial para o envio de atividades
                             listaDePacientes.add(paciente);
                         }
-
                         pacienteAdapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(getContext(), "Erro ao carregar pacientes.", Toast.LENGTH_SHORT).show();
@@ -102,10 +90,3 @@ public class ListaTeste extends Fragment {
                 });
     }
 }
-
-
-
-
-
-
-
