@@ -119,6 +119,7 @@
 
         <ImageButton
             android:id="@+id/btn_select_image"
+            android:contentDescription="immagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
@@ -129,6 +130,7 @@
 
         <ImageButton
             android:id="@+id/btn_record_audio"
+            android:contentDescription="@string/toque_em_gravar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

@@ -36,7 +36,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         etdEmail = findViewById(R.id.edtEmail);
         etdSenha = findViewById(R.id.edtSenha);
         etdIdade = findViewById(R.id.edtIdade);
-        btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCadastrar = findViewById(R.id.fabAddPaciente);
 
         // 3. Configura o clique do botão
         btnCadastrar.setOnClickListener(v -> {

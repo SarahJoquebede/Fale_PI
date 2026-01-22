@@ -91,7 +91,7 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btnCadastrar"
+            android:id="@+id/fabAddPaciente"
             android:contentDescription="cadastrar"
             android:layout_width="136dp"
             android:layout_height="48dp"
@@ -135,7 +135,7 @@
             android:layout_marginTop="568dp"
             android:layout_marginEnd="124dp"
             android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/btnCadastrar"
+            app:layout_constraintEnd_toStartOf="@+id/fabAddPaciente"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
