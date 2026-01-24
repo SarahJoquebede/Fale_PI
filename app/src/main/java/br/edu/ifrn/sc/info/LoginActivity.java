@@ -2,6 +2,7 @@ package br.edu.ifrn.sc.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -74,38 +75,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verificarTipoUsuario(String uid) {
-        // 5. Busca o documento do usuário na coleção "usuarios" usando o ID
-        db.collection("usuarios").document(uid).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // 6. Verifica se o campo "tipo" é true (Fono) ou false (Paciente)
-                        Boolean isFono = documentSnapshot.getBoolean("tipo");
-
-                        // Se o campo não existir, 'isFono' será null, então tratamos como paciente por segurança.
-                        if (isFono != null && isFono) {
-                            // Se for Fonoaudiólogo (tipo == true)
-                            // ABRE A TELA DO MENU NOVO
-                            Intent intent = new Intent(LoginActivity.this, MenuTeste.class);
-                            startActivity(intent);
-                        } else {
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                        finish(); // Fecha a tela de login para o usuário não voltar para ela
-
+        // 1. Tenta buscar na coleção de pacientes primeiro (já que é onde está o problema)
+        db.collection("pacientes").document(uid).get()
+                .addOnSuccessListener(docPaciente -> {
+                    if (docPaciente.exists()) {
+                        Log.d("LOGIN_DEBUG", "Sucesso! Encontrado na coleção PACIENTES");
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     } else {
-                        // Caso raro: usuário existe no Auth mas não no Firestore
-                        Toast.makeText(LoginActivity.this, "Erro: Dados do usuário não encontrados.", Toast.LENGTH_SHORT).show();
-                        mAuth.signOut(); // Desloga o usuário para evitar problemas
-                        btnLogin.setEnabled(true);
+                        Log.d("LOGIN_DEBUG", "Não está em pacientes. Tentando coleção USUARIOS...");
+
+                        // 2. Se não achou em pacientes, tenta na de usuários (Fonos)
+                        db.collection("usuarios").document(uid).get()
+                                .addOnSuccessListener(docFono -> {
+                                    if (docFono.exists()) {
+                                        Log.d("LOGIN_DEBUG", "Sucesso! Encontrado na coleção USUARIOS");
+                                        startActivity(new Intent(LoginActivity.this, MenuTeste.class));
+                                        finish();
+                                    } else {
+                                        Log.e("LOGIN_DEBUG", "ERRO: O UID " + uid + " não existe em NENHUMA coleção!");
+                                        Toast.makeText(this, "Erro: Cadastro incompleto no banco de dados.", Toast.LENGTH_LONG).show();
+                                        mAuth.signOut();
+                                        btnLogin.setEnabled(true);
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Se a busca no banco falhar
-                    Toast.makeText(LoginActivity.this, "Erro ao buscar dados: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    mAuth.signOut();
+                    Log.e("LOGIN_DEBUG", "Erro de conexão com Firestore: " + e.getMessage());
                     btnLogin.setEnabled(true);
                 });
     }
-}
+
+    }
+
+
