@@ -1,29 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="5dp">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <!-- Substituindo LinearLayout por ConstraintLayout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Título do Áudio"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Autor ou data"
-        android:textSize="14sp"
-        android:textColor="#777" />
+        <!-- Ícone de áudio, preso à esquerda e ao centro verticalmente -->
+        <ImageView
+            android:id="@+id/ivAudioIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="Ícone de áudio"
+            android:src="@drawable/blocos_preto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/material_dynamic_neutral10" />
 
-    <Button
-        android:id="@+id/btnOpen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ouvir" />
-</LinearLayout>
+        <!-- Título da Atividade -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/lilita_oone"
+            android:text="Título da Atividade"
+            android:textColor="@color/material_dynamic_neutral10"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvSubtitle"
+            app:layout_constraintStart_toEndOf="@+id/ivAudioIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+        <!-- Vertical chainStyle "packed" junta os textos quando há espaço -->
+
+        <!-- Subtítulo (Pendente) -->
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lilita_oone"
+            android:text="Pendente"
+            android:textColor="@color/material_dynamic_neutral10"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <Button
+            android:id="@+id/btnOpen"
+            android:layout_width="70dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="66dp"
+            android:background="#A6A3A3"
+            android:backgroundTint="#A6A3A3"
+            android:backgroundTintMode="add"
+            android:text="Button"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="93dp"
+            android:layout_height="63dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnOpen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnOpen"
+            app:srcCompat="@drawable/btnplay"
+            app:tint="#2E2C2C" />
+
+        <!-- Botão de Play, preso à direita e ao centro verticalmente -->
+        <!-- Simplifiquei seus 2 botões em apenas um que é visível e clicável -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
