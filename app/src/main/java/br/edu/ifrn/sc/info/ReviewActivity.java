@@ -10,10 +10,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 public class ReviewActivity extends AppCompatActivity{
-    private SeekBar sbNota; //ANTES ERA UM BOTAO ESSE
+    private RatingBar rbNota; //ANTES ERA UM BOTAO ESSE
     private EditText etComentario; //ESSE TBM
     private String audioUrl, audioId;
 
@@ -29,7 +30,7 @@ public class ReviewActivity extends AppCompatActivity{
         //Achou o botao
         Button btnPlay = findViewById(R.id.btnPlay);
         Button btnSalvar = findViewById(R.id.btnSalvar);
-        sbNota = findViewById(R.id.sbNota);
+        rbNota = findViewById(R.id.rbNota);
         etComentario = findViewById(R.id.etComentario);
 
         //Pegando as infos da tela anterior
@@ -60,17 +61,37 @@ public class ReviewActivity extends AppCompatActivity{
     }
 
     private void salvarAvaliacao() {
-        int nota = sbNota.getProgress();
-        String comentario = etComentario.getText().toString();
+        // 1. Captura os dados da tela
+        float estrelasProgresso = rbNota.getRating(); // Estrelas para o progresso do paciente
+        String observacaoClinica = etComentario.getText().toString(); // Comentário guardado para o fono
 
-        Map<String, Object> aval = new HashMap<>();
-        aval.put("avaliadorId", user.getUid());
-        aval.put("nota", nota);
-        aval.put("comentario", comentario);
+        if (observacaoClinica.isEmpty()) {
+            Toast.makeText(this, "Por favor, insira a observação clínica.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        db.collection("audios").document(audioId)
-                .collection("avaliacoes").add(aval)
-                .addOnSuccessListener(r -> Toast.makeText(this, "Avaliação salva!", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        // 2. Organiza os dados para o Firestore
+        Map<String, Object> avaliacao = new HashMap<>();
+        avaliacao.put("pacienteId", user.getUid()); // ID do paciente (visto que ele está logado)
+        avaliacao.put("notaEstrelas", estrelasProgresso);
+        avaliacao.put("comentarioFono", observacaoClinica);
+        avaliacao.put("audioRelacionado", audioId);
+        avaliacao.put("dataAvaliacao", new Date());
+
+        // 3. Salva em uma coleção de 'historico_atividades'
+        // Assim o fonoaudiólogo pode consultar depois filtrando pelo ID do paciente
+        db.collection("historico_atividades").add(avaliacao)
+                .addOnSuccessListener(documentReference -> {
+
+                    // 4. Opcional: Atualizar a última nota no cadastro do paciente para o fono ver na lista
+                    db.collection("pacientes").document(user.getUid())
+                            .update("ultimoProgresso", estrelasProgresso);
+
+                    Toast.makeText(this, "Avaliação clínica salva com sucesso!", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao salvar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
