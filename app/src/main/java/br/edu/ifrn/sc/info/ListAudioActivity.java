@@ -93,12 +93,13 @@ public class ListAudioActivity extends AppCompatActivity{
             h.btnOpen.setOnClickListener(v -> click.onClick(a));
         }
 
+
         @Override
         public int getItemCount() { return list.size(); }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvTitle, tvSubtitle;
-            Button btnOpen;
+            ImageButton btnOpen;
             ViewHolder(View v) {
                 super(v);
                 tvTitle = v.findViewById(R.id.tvTitle);

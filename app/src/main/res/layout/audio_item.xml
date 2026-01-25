@@ -1,29 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="5dp">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <!-- Usando um LinearLayout horizontal. É muito mais simples para este caso. -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Título do Áudio"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Autor ou data"
-        android:textSize="14sp"
-        android:textColor="#777" />
+        <!-- Ícone à esquerda -->
+        <ImageView
+            android:id="@+id/ivAudioIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Ícone de áudio"
+            android:src="@drawable/blocos_preto"
+            app:tint="@color/material_dynamic_neutral10" />
 
-    <Button
-        android:id="@+id/btnOpen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ouvir" />
-</LinearLayout>
+        <!-- Bloco de texto que ocupa o espaço que sobra -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lilita_oone"
+                android:text="Título da Atividade"
+                android:textColor="@color/material_dynamic_neutral10"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Subtítulo agora visível e posicionado corretamente -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lilita_oone"
+                android:text="Pendente"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textSize="14sp"
+                android:visibility="visible" /> <!-- Deixei visível -->
+
+        </LinearLayout>
+
+        <!-- Botão de Play à direita -->
+        <ImageButton
+            android:id="@+id/btnOpen"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Ouvir áudio"
+            android:src="@android:drawable/ic_media_play"
+            app:tint="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
