@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         btnList.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ListAudioActivity.class));
         });
+
         db.collection("blocos")
                 .document("plosivizacao")
                 .collection("categorias")
@@ -109,11 +110,12 @@ public class MainActivity extends AppCompatActivity {
                     if (!query.isEmpty()) {
                         DocumentSnapshot doc = query.getDocuments().get(0);
 
-                        imageUrl = doc.getString("imageUrl");
+                        imageUrl = doc.getString("imagemUrl");
                         audioUrl = doc.getString("audioUrl");
 
                         mostrarImagemAtividade();
                         prepararAudioAtividade();
+                        Toast.makeText(this, "AAA", Toast.LENGTH_SHORT).show();
                     }
                 });
 

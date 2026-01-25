@@ -38,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         //Para facilitar os testes
+        //edtEmail.setText("fono@email.com");
+        //edtSenha.setText("fono123");
+
         edtEmail.setText("fono@email.com");
         edtSenha.setText("fono123");
 
@@ -85,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (isFono != null && isFono) {
                             // Se for Fonoaudiólogo (tipo == true)
                             // ABRE A TELA DO MENU NOVO
-                            Intent intent = new Intent(LoginActivity.this, MenuTeste.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
 
