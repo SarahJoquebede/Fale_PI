@@ -39,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         //Para facilitar os testes
-        edtEmail.setText("fono@email.com");
-        edtSenha.setText("fono123");
+        //edtEmail.setText("paci@email.com");
+        //edtSenha.setText("paci123");
 
         // 3. Configura o clique do botão de login
         btnLogin.setOnClickListener(v -> {
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(docPaciente -> {
                     if (docPaciente.exists()) {
                         Log.d("LOGIN_DEBUG", "Sucesso! Encontrado na coleção PACIENTES");
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, ListaAtividadesActivity.class));
                         finish();
                     } else {
                         Log.d("LOGIN_DEBUG", "Não está em pacientes. Tentando coleção USUARIOS...");

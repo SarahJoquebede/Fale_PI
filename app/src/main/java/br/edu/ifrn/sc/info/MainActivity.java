@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     private String imageUrl;
     private String audioUrl;
 
+    private TextView tvSilabica;
+    private TextView tvPalavra;
+
     private MediaPlayer mediaPlayer;
 
     private static final int PERM_CODE = 1001;
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         progressUpload = findViewById(R.id.progressUpload);
         imgAtividade = findViewById(R.id.imgAtividade);
         btnPlayAtividade = findViewById(R.id.btnPlayAtividade);
+        tvPalavra = findViewById(R.id.tvPalavra);
+        tvSilabica = findViewById(R.id.tvSilabica);
 
 
         // Inicializa o Storage apontando diretamente para o bucket do seu projeto Firebase
@@ -98,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
         btnList.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ListAudioActivity.class));
         });
-
-        db.collection("blocos")
-                .document("plosivizacao")
-                .collection("categorias")
-                .document("animais")
+/*
+        db.collection("pacientes")
+                .document(user.getUid())
+                .collection("blocosRecebidos")
+                .document("plosivizacao_animais")
                 .collection("atividades")
                 .limit(1)
                 .get()
@@ -112,12 +117,53 @@ public class MainActivity extends AppCompatActivity {
 
                         imageUrl = doc.getString("imagemUrl");
                         audioUrl = doc.getString("audioUrl");
+                        tvPalavra.setText(doc.getString("palavra"));
+                        tvSilabica.setText(doc.getString("silabica"));
+
 
                         mostrarImagemAtividade();
                         prepararAudioAtividade();
                         Toast.makeText(this, "AAA", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
+
+        // Na MainActivity.java dentro do onCreate
+        Atividade atividadeSelecionada = (Atividade) getIntent().getSerializableExtra("atividade");
+
+        if (atividadeSelecionada != null) {
+            // Se veio de um clique na lista, usa os dados passados
+            imageUrl = atividadeSelecionada.getImagemUrl();
+            audioUrl = atividadeSelecionada.getAudioUrl();
+            tvPalavra.setText(atividadeSelecionada.getPalavra());
+            tvSilabica.setText(atividadeSelecionada.getSilabica());
+
+            mostrarImagemAtividade();
+            prepararAudioAtividade();
+        } else {
+            // Caso contrário, executa a busca padrão que você já tinha (opcional)
+            db.collection("pacientes")
+                    .document(user.getUid())
+                    .collection("blocosRecebidos")
+                    .document("plosivizacao_animais")
+                    .collection("atividades")
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(query -> {
+                        if (!query.isEmpty()) {
+                            DocumentSnapshot doc = query.getDocuments().get(0);
+
+                            imageUrl = doc.getString("imagemUrl");
+                            audioUrl = doc.getString("audioUrl");
+                            tvPalavra.setText(doc.getString("palavra"));
+                            tvSilabica.setText(doc.getString("silabica"));
+
+
+                            mostrarImagemAtividade();
+                            prepararAudioAtividade();
+                            Toast.makeText(this, "AAA", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
 
     }
     private void mostrarImagemAtividade() {

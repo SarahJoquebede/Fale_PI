@@ -63,6 +63,8 @@
             android:exported="false"
             android:label="MenuTeste"
             />
+        <activity android:name=".ListaAtividadesActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

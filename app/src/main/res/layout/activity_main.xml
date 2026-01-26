@@ -14,24 +14,11 @@
         layout="@layout/activity_cabecalho_model" />
 
 
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="@string/toque_em_gravar"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
-        tools:ignore="MissingConstraints" />
-
     <Button
         android:id="@+id/btnStop"
         android:layout_width="165dp"
         android:layout_height="48dp"
-        android:layout_marginTop="576dp"
+        android:layout_marginTop="608dp"
         android:enabled="false"
         android:text="⏹️ Parar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +30,7 @@
         android:id="@+id/btnList"
         android:layout_width="166dp"
         android:layout_height="48dp"
-        android:layout_marginTop="616dp"
+        android:layout_marginTop="648dp"
         android:contentDescription="@string/listar"
         android:enabled="true"
         android:text="@string/listar"
@@ -73,6 +60,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
+        android:id="@+id/btnPlayAtividade"
+        android:layout_width="80dp"
+        android:layout_height="79dp"
+        android:layout_marginEnd="80dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/listar"
+        android:src="@drawable/btnouvir"
+        android:text="🔊 Ouvir áudio"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.763"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
         android:id="@+id/btnStart"
         android:layout_width="84dp"
         android:layout_height="72dp"
@@ -86,45 +89,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.71"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
-        android:id="@+id/btnPlayAtividade"
-        android:layout_width="80dp"
-        android:layout_height="79dp"
-        android:layout_marginEnd="80dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/listar"
-        android:src="@drawable/btnouvir"
-        android:text="🔊 Ouvir áudio"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717"
+        app:layout_constraintVertical_bias="0.755"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tx_palavra"
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="@string/toque_em_gravar"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAtividade"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvPalavra"
         android:layout_width="56dp"
         android:layout_height="24dp"
-        android:layout_marginTop="368dp"
+        android:layout_marginTop="384dp"
         android:text="Teste"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tx_silabica"
+        android:id="@+id/tvSilabica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPalavra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
