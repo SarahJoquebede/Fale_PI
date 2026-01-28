@@ -52,6 +52,7 @@ public class UploadArquivos extends AppCompatActivity {
 
         // Recupera o ID do tema e o ID do paciente vindos do Dashboard
         mThemeId = getIntent().getStringExtra("THEME_ID");
+        mPacienteId = getIntent().getStringExtra("PACIENTE_ID");
 
         if (mThemeId == null) {
             mThemeId = "animais";
